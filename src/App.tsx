@@ -1,11 +1,9 @@
 import "./App.scss";
 import { Routes, Route } from "react-router-dom";
 
-// components
 import Navbar from "./components/Navbar";
 import Header from "./components/header/Header";
 
-// pages
 import Dashboard from "./page/admin/dashbord";
 import Module1 from "./page/module1/module1";
 import Module2 from "./page/module2/module2";
