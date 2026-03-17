@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import {
 	Home,
 	Percent,
 	Users,
 	Building2,
-	Search,
-	Bell,
-	ChevronRight,
 } from "lucide-react";
 import { Chart as ChartJS, registerables } from "chart.js";
 
@@ -17,17 +14,18 @@ const Module1 = () => {
 	const [data, setData] = useState<any>(null);
 
 	useEffect(() => {
-		fetch("http://localhost:8000/api/stats/dashboard-module1")
+		fetch("https://iris-db.alawaysdata.net/api/stats/dashboard-module1")
 			.then((res) => res.json())
 			.then((data) => setData(data));
 	}, []);
 
-	if (!data)
+	if (!data) {
 		return (
 			<div className="flex h-full items-center justify-center bg-[#D5D5D8] font-medium text-gray-400">
 				Initialisation d'Iris...
 			</div>
 		);
+	}
 
 	return (
 		<div className="flex h-[100%] bg-[#D5D5D8] p-4 font-sans antialiased">

@@ -8,7 +8,7 @@ const Module2 = () => {
     const [data, setData] = useState<any>(null);
 
     useEffect(() => {
-        fetch("http://localhost:8000/api/stats/module2")
+        fetch("https://iris-db.alawaysdata.net/api/stats/module2")
             .then((res) => res.json())
             .then((res) => setData(res))
             .catch((err) => console.error("Erreur API:", err));

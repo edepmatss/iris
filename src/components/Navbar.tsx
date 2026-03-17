@@ -2,7 +2,6 @@ import { useState } from 'react';
 import logo from '../assets/Logo1.svg';
 import logoIcon from '../assets/logoIcon.svg';
 import diagram from '../assets/diagram.svg';
-import './Navbar.scss';
 
 export default function Navbar() {
   const [activeModule, setActiveModule] = useState('Module 1');
@@ -69,7 +68,7 @@ export default function Navbar() {
         aria-label="Toggle Sidebar"
       >
         <svg 
-          className={`transition-transform duration-300 ${isOpen ? 'rotate-180 hover:rotate-0' : 'rotate-0 hover:rotate-180'}`}
+          className={`transition-transform duration-300 ${isOpen ? 'rotate0 hover:rotate-180' : 'rotate-180 hover:rotate-0'}`}
           width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
         >
           <path d="M9 18l6-6-6-6" />
