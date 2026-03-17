@@ -14,7 +14,7 @@ const Module1 = () => {
 	const [data, setData] = useState<any>(null);
 
 	useEffect(() => {
-		fetch("https://iris-db.alawaysdata.net/api/stats/dashboard-module1")
+		fetch("https://iris-db.alwaysdata.net/api/stats/dashboard-module1")
 			.then((res) => res.json())
 			.then((data) => setData(data));
 	}, []);
