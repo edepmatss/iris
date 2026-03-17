@@ -17,7 +17,6 @@ function Header({ title }: { title: string }) {
 						className="outline-none text-white bg-transparent w-full h-full placeholder:text-white"
 					/>
 				</div>
-				{/* user lucide react */}
 				<button className="cursor-pointer bg-[#8D8D8D] w-10 h-10 flex items-center justify-center rounded">
 					<UserRound size={25} className="invert" />
 				</button>

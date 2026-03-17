@@ -4,7 +4,7 @@ import { Chart as ChartJS, registerables } from "chart.js";
 
 ChartJS.register(...registerables);
 
-const Module2 = () => {
+export default function Module2() {
     const [data, setData] = useState<any>(null);
 
     useEffect(() => {
@@ -46,5 +46,3 @@ const Module2 = () => {
         </div>
     );
 };
-
-export default Module2;
