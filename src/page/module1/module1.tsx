@@ -217,4 +217,5 @@ const QuickLink = ({ icon, label, color }: any) => (
 	</div>
 );
 
+
 export default Module1;
