@@ -1,23 +1,119 @@
 import { useState } from 'react';
-import logo from '../assets/Logo1.svg';
+import logo from '../assets/Logo1.svg'; 
 import logoIcon from '../assets/logoIcon.svg';
 import diagram from '../assets/diagram.svg';
 
+const NAV_ITEMS_ADMIN = [
+  {
+    id: 'dashboard',
+    label: 'Dashboard Public',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 12l4.5-4.5" />
+        <circle cx="12" cy="12" r="2" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
+    id: 'data',
+    label: 'Gestion des Données',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
+        <ellipse cx="12" cy="6" rx="8" ry="3" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6" />
+      </svg>
+    ),
+  },
+  {
+    id: 'charts',
+    label: 'Configuration des\nGraphiques',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6v13a1 1 0 001 1h14M8 14l3-3 4 4 5-5" />
+      </svg>
+    ),
+  },
+  {
+    id: 'security',
+    label: 'Sécurité',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
+    ),
+  },
+];
+
+const NAV_ITEMS_USER = [
+  {
+    id: 'module1',
+    label: 'Module 1',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+      </svg>
+    ),
+  },
+  {
+    id: 'module2',
+    label: 'Module 2',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+      </svg>
+    ),
+  },
+  {
+    id: 'module3',
+    label: 'Module 3',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+      </svg>
+    ),
+  },
+  {
+    id: 'module4',
+    label: 'Module 4',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+      </svg>
+    ),
+  },
+  {
+    id: 'module5',
+    label: 'Module 5',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+      </svg>
+    ),
+  },
+];
+
 export default function Navbar() {
-  const [activeModule, setActiveModule] = useState('Module 1');
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
+  const currentNavItems = isAdmin ? NAV_ITEMS_ADMIN : NAV_ITEMS_USER;
+  const [activeItem, setActiveItem] = useState(isAdmin ? 'dashboard' : 'module1');
   const [isOpen, setIsOpen] = useState(true); 
 
-  const modules = ['Module 1', 'Module 2', 'Module 3', 'Module 4', 'Module 5'];
+  const handleLogout = () => {
+    localStorage.removeItem("isAdmin"); 
+    window.location.href = "/"; 
+  };
 
   return (
     <aside 
       className={`relative h-screen bg-[#3E3E3E] flex flex-col shadow-xl select-none transition-all duration-300 z-40 ${
-        isOpen ? 'w-[280px]' : 'w-[150px]'
+        isOpen ? 'w-[280px]' : 'w-[100px]'
       }`}
     >
-      <div className="flex flex-col h-full overflow-hidden whitespace-nowrap">
+      <div className="flex flex-col h-full overflow-hidden">
         
-        <div className={`pt-16 flex z-10 shrink-0 transition-all duration-300 ${isOpen ? 'px-12 justify-start' : 'px-0 justify-center'}`}>
+        <div className={`pt-16 pb-10 flex z-10 shrink-0 transition-all duration-300 ${isOpen ? 'px-12 justify-start' : 'px-0 justify-center'}`}>
           <img 
             src={isOpen ? logo : logoIcon} 
             alt="Iris Logo" 
@@ -25,33 +121,60 @@ export default function Navbar() {
           />
         </div>
 
-        <nav className={`mt-20 flex flex-col gap-8 z-10 ${isOpen ? 'px-12' : 'px-0 items-center'}`}>
-          {modules.map((mod, index) => {
-            const isActive = activeModule === mod;
+        <nav className="flex flex-col w-full z-10">
+          {currentNavItems.map((item, index) => {
+            const isActive = activeItem === item.id;
             return (
               <button
-                key={mod}
-                onClick={() => setActiveModule(mod)}
-                className={`flex items-center gap-4 transition-all  duration-300 ${
+                key={item.id}
+                onClick={() => setActiveItem(item.id)}
+                className={`flex items-center w-full py-4 transition-all duration-300 ${
+                  isOpen ? 'px-8 gap-4' : 'justify-center px-0'
+                } ${
                   isActive
-                    ? 'text-white'
-                    : 'text-[#9ca3af] hover:text-gray-200 hover:translate-x-2'
+                    ? isAdmin ? 'bg-[#525252] text-white' : 'text-white'
+                    : `text-[#9ca3af] hover:text-gray-200 ${isAdmin ? 'hover:bg-[#4a4a4a]' : 'hover:translate-x-2'}`
                 }`}
               >
-                <svg 
-                  className={`w-7 h-7 shrink-0 ${isActive ? 'text-white' : 'text-[#9ca3af]'}`} 
-                  fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
+                <div className={`shrink-0 transition-transform duration-300 ${isActive ? 'text-white' : 'text-[#9ca3af]'}`}>
+                  {item.icon}
+                </div>
 
-                <span className={`${isActive ? 'text-[28px] font-bold tracking-wide' : 'text-[20px]'}`}>
-                  {isOpen ? mod : (index + 1)}
-                </span>
+                {isOpen && (
+                  <span 
+                    className={`${isAdmin ? 'text-[15px] leading-tight whitespace-pre-line' : 'text-[20px]'} ${
+                      isActive ? (isAdmin ? 'font-medium' : 'text-[28px] font-bold tracking-wide') : 'font-normal'
+                    }`}
+                  >
+                    {isAdmin ? item.label : item.label}
+                  </span>
+                )}
+                
+                {!isOpen && !isAdmin && (
+                  <span className={`text-[20px] ${isActive ? 'font-bold text-white' : 'font-normal text-[#9ca3af]'}`}>
+                    {index + 1}
+                  </span>
+                )}
               </button>
             )
           })}
         </nav>
+
+        {isAdmin && (
+          <div className={`mt-auto mb-10 z-10 w-full flex flex-col ${isOpen ? 'px-8' : 'px-0 items-center'}`}>
+            <button
+              onClick={handleLogout}
+              className={`flex items-center py-3 w-full transition-colors duration-300 text-red-400 hover:text-red-300 hover:bg-[#4a4a4a] rounded-md ${
+                isOpen ? 'gap-4 px-4' : 'justify-center px-0'
+              }`}
+            >
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-6 h-6 shrink-0">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+              </svg>
+              {isOpen && <span className="text-[15px] font-medium">Déconnexion</span>}
+            </button>
+          </div>
+        )}
 
         <div className="absolute bottom-0 left-0 w-full z-0 pointer-events-none flex justify-center">
           <img 
@@ -64,11 +187,13 @@ export default function Navbar() {
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="absolute top-1/2 -right-6 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors z-50 cursor-pointer"
+        className="absolute top-1/2 -right-6 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors z-50 cursor-pointer group"
         aria-label="Toggle Sidebar"
       >
         <svg 
-          className={`transition-transform duration-300 ${isOpen ? 'rotate0 hover:rotate-180' : 'rotate-180 hover:rotate-0'}`}
+          className={`transition-transform duration-300 ${
+            isOpen ? 'rotate-0 group-hover:rotate-180' : 'rotate-180 group-hover:rotate-0'
+          }`}
           width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
         >
           <path d="M9 18l6-6-6-6" />
