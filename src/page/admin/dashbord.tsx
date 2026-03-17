@@ -63,11 +63,10 @@ export default function Dashboard() {
                             handleFile(e.dataTransfer.files?.[0]);
                         }}
                         onClick={() => inputRef.current?.click()}
-                        className={`flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed transition-colors cursor-pointer ${
-                            dragging
+                        className={`flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed transition-colors cursor-pointer ${dragging
                                 ? "border-blue-400 bg-blue-50"
                                 : "border-slate-200 bg-slate-50 hover:border-slate-300"
-                        }`}
+                            }`}
                         style={{ padding: "2.5rem 1.5rem" }}
                     >
                         <Upload size={22} className="text-slate-400" />
