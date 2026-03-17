@@ -15,7 +15,7 @@ const GuestLayout = () => {
 			<Navbar />
 			<main className="flex-1 relative flex flex-col bg-gray-50">
 				<Header title="Espace Apprentissage" />
-				<div className="flex-1 overflow-y-auto p-10">
+				<div className="flex-1 overflow-y-auto">
 					<Outlet />
 				</div>
 			</main>
