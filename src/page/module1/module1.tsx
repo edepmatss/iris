@@ -1,31 +1,27 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { Home, Percent, Users, Building2 } from "lucide-react";
 import { Chart as ChartJS, registerables } from "chart.js";
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
 import { scaleQuantile } from "d3-scale";
+import useFetchData from "../../utils/useFetchData";
 
 ChartJS.register(...registerables);
 
 const geoUrl = "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements.geojson";
 
 const Module1 = () => {
-	const [data, setData] = useState<any>(null);
 	const [tooltip, setTooltip] = useState<{ name: string; value: number | string; x: number; y: number } | null>(null);
 
-	useEffect(() => {
-		fetch("https://iris-db.alwaysdata.net/api/stats/dashboard-module1")
-			.then((res) => res.json())
-			.then((data) => setData(data));
-	}, []);
+	const { data, loading } = useFetchData("module1");
 
-	if (!data) {
-		return (
-			<div className="flex h-full items-center justify-center bg-[#D5D5D8] font-medium text-gray-400">
-				Initialisation d'Iris...
-			</div>
-		);
-	}
+	if (loading || !data) {
+        return (
+            <div className="flex h-full items-center justify-center bg-[#D5D5D8] font-medium text-gray-400">
+                Initialisation d'Iris...
+            </div>
+        );
+    }
 
 	const colorScale = scaleQuantile<string>()
 		.domain(data.map.map((d: any) => d.value))
@@ -41,7 +37,14 @@ const Module1 = () => {
 
 	return (
 		<div className="h-full overflow-y-auto bg-[#D5D5D8] p-4 lg:p-6 flex flex-col gap-4 lg:gap-6 relative">
-			
+
+			<div className="grid grid-cols-4 gap-4 lg:gap-6">
+				<KpiCard title="Logements Sociaux" value={data.kpis.logementsSociaux.value} icon={<Home size={28} />} color="bg-[#e0e7ff] text-[#6366f1]" />
+				<KpiCard title="Taux de chômage" value={data.kpis.chomage.value} icon={<Percent size={28} />} color="bg-[#e0f2fe] text-[#0ea5e9]" />
+				<KpiCard title="Variation population" value={data.kpis.population.value} icon={<Users size={28} />} color="bg-[#f5f3ff] text-[#8b5cf6]" />
+				<KpiCard title="Logements FR" value={data.kpis.logementsTotal.value} icon={<Building2 size={28} />} color="bg-[#ede9fe] text-[#7c3aed]" />
+			</div>
+
 			{tooltip && (
 				<div
 					className="pointer-events-none fixed z-[9999] bg-[#2d2d2d] text-white px-4 py-2.5 rounded-xl shadow-2xl flex flex-col gap-1 border border-gray-600/50"
@@ -67,15 +70,8 @@ const Module1 = () => {
 				</div>
 			)}
 
-			<div className="grid grid-cols-4 gap-4 lg:gap-6">
-				<KpiCard title="Logements Sociaux" value={data.kpis.logementsSociaux.value} icon={<Home size={28} />} color="bg-[#e0e7ff] text-[#6366f1]" />
-				<KpiCard title="Taux de chômage" value={data.kpis.chomage.value} icon={<Percent size={28} />} color="bg-[#e0f2fe] text-[#0ea5e9]" />
-				<KpiCard title="Variation population" value={data.kpis.population.value} icon={<Users size={28} />} color="bg-[#f5f3ff] text-[#8b5cf6]" />
-				<KpiCard title="Logements FR" value={data.kpis.logementsTotal.value} icon={<Building2 size={28} />} color="bg-[#ede9fe] text-[#7c3aed]" />
-			</div>
-
 			<div className="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6 pb-4">
-				
+
 				<div className="xl:col-span-2 bg-white p-5 rounded-[1rem] shadow-sm relative flex flex-col min-h-[500px] overflow-hidden">
 					<div className="flex justify-between items-start mb-4 z-10">
 						<div>
@@ -91,7 +87,7 @@ const Module1 = () => {
 							<button className="px-4 py-1.5 rounded-lg text-xs font-bold text-gray-400 hover:text-gray-600">N-3</button>
 						</div>
 					</div>
-					
+
 					<div className="flex-1 w-full flex items-center justify-center">
 						<ComposableMap
 							projection="geoConicConformal"
@@ -111,13 +107,13 @@ const Module1 = () => {
 												<Geography
 													key={geo.rsmKey}
 													geography={geo}
-													fill={currentDept ? colorScale(currentDept.value) : "#f3f4f6"}
+													fill={currentDept ? colorScale(currentDept.value) : "#ffffff"}
 													stroke="#ffffff"
 													strokeWidth={0.5}
 													style={{
 														default: { outline: "none" },
-														hover: { 
-															fill: "#f59e0b",
+														hover: {
+															fill: "#ff69b4",
 															outline: "none",
 															cursor: "pointer",
 															transition: "all 250ms"
@@ -146,7 +142,7 @@ const Module1 = () => {
 							</ZoomableGroup>
 						</ComposableMap>
 					</div>
-					
+
 					<div className="absolute bottom-5 left-5 flex flex-col gap-1 pointer-events-none">
 						<p className="text-gray-300 font-medium italic text-sm">
 							Données : {data.map.length} départements chargés
@@ -158,7 +154,7 @@ const Module1 = () => {
 				</div>
 
 				<div className="flex flex-col gap-4 lg:gap-6">
-					
+
 					<div className="bg-white p-5 rounded-[1rem] shadow-sm flex flex-col min-h-[350px]">
 						<h3 className="text-xs font-black text-gray-400 mb-4 uppercase tracking-[0.2em]">
 							Top 5 Départements : Construction

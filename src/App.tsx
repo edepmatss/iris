@@ -8,6 +8,9 @@ import Identification from "./page/identification/identification";
 import Dashboard from "./page/admin/dashbord";
 import Module1 from "./page/module1/module1";
 import Module2 from "./page/module2/module2";
+import Module3 from "./page/module3/module3";
+import Module4 from "./page/module4/module4";
+import Module5 from "./page/module5/module5";
 
 const GuestLayout = () => {
 	return (
@@ -56,6 +59,9 @@ function App() {
 				<Route path="/" element={<Module1 />} />
 				<Route path="/module1" element={<Module1 />} />
 				<Route path="/module2" element={<Module2 />} />
+				<Route path="/module3" element={<Module3 />} />
+				<Route path="/module4" element={<Module4 />} />
+				<Route path="/module5" element={<Module5 />} />
 			</Route>
 
 			<Route element={<AdminLayout />}>
