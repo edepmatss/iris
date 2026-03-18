@@ -113,11 +113,13 @@ export default function Navbar() {
 			<div className="flex flex-col h-full overflow-hidden">
 
 				<div className={`pt-16 pb-10 flex z-10 shrink-0 transition-all duration-300 ${isOpen ? 'px-12 justify-start' : 'px-0 justify-center'}`}>
-					<img
-						src={isOpen ? logo : logoIcon}
-						alt="Iris Logo"
-						className={`transition-all duration-300 ${isOpen ? 'w-32' : 'w-10'} h-auto`}
-					/>
+					<Link to="/" onClick={() => setActiveItem("/")}>
+						<img
+							src={isOpen ? logo : logoIcon}
+							alt="Iris Logo"
+							className={`transition-all duration-300 ${isOpen ? 'w-32' : 'w-10'} h-auto`}
+						/>
+					</Link>
 				</div>
 
 				<nav className="flex flex-col w-full z-10">

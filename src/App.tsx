@@ -11,6 +11,7 @@ import Module2 from "./page/module2/module2";
 import Module3 from "./page/module3/module3";
 import Module4 from "./page/module4/module4";
 import Module5 from "./page/module5/module5";
+import Accueil from "./page/accueil/accueil";
 
 const GuestLayout = () => {
 	return (
@@ -56,7 +57,7 @@ function App() {
 			<Route path="/admin/login" element={<Identification />} />
 
 			<Route element={<GuestLayout />}>
-				<Route path="/" element={<Module1 />} />
+				<Route path="/" element={<Accueil />} />
 				<Route path="/module1" element={<Module1 />} />
 				<Route path="/module2" element={<Module2 />} />
 				<Route path="/module3" element={<Module3 />} />
