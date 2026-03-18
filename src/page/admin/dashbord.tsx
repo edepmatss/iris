@@ -31,7 +31,6 @@ export default function Dashboard() {
             style={{ padding: "2rem" }}
         >
             <div className="w-full max-w-12xl grid grid-cols-2 gap-5">
-                {/* ── Importer des Données ── */}
                 <div
                     className="bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-5"
                     style={{ padding: "1.5rem" }}
@@ -41,7 +40,6 @@ export default function Dashboard() {
                         Importer des Données
                     </h3>
 
-                    {/* Input caché */}
                     <input
                         ref={inputRef}
                         type="file"
@@ -50,7 +48,6 @@ export default function Dashboard() {
                         onChange={(e) => handleFile(e.target.files?.[0])}
                     />
 
-                    {/* Drop zone */}
                     <div
                         onDragOver={(e) => {
                             e.preventDefault();
@@ -64,8 +61,8 @@ export default function Dashboard() {
                         }}
                         onClick={() => inputRef.current?.click()}
                         className={`flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed transition-colors cursor-pointer ${dragging
-                                ? "border-blue-400 bg-blue-50"
-                                : "border-slate-200 bg-slate-50 hover:border-slate-300"
+                            ? "border-blue-400 bg-blue-50"
+                            : "border-slate-200 bg-slate-50 hover:border-slate-300"
                             }`}
                         style={{ padding: "2.5rem 1.5rem" }}
                     >
@@ -99,7 +96,6 @@ export default function Dashboard() {
                         </button>
                     </div>
 
-                    {/* Progress */}
                     <div className="flex flex-col gap-1.5">
                         <div className="flex justify-between items-center">
                             <span className="text-xs text-slate-500">
@@ -121,7 +117,6 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                {/* ── Gérer les Widgets Existants ── */}
                 <div
                     className="bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-4"
                     style={{ padding: "1.5rem" }}

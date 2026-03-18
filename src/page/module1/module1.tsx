@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { Home, Percent, Users, Building2 } from "lucide-react";
 import { Chart as ChartJS, registerables } from "chart.js";
-// NOUVEAU : On importe ZoomableGroup
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
 import { scaleQuantile } from "d3-scale";
 
@@ -43,7 +42,6 @@ const Module1 = () => {
 	return (
 		<div className="h-full overflow-y-auto bg-[#D5D5D8] p-4 lg:p-6 flex flex-col gap-4 lg:gap-6 relative">
 			
-			{/* Tooltip */}
 			{tooltip && (
 				<div
 					className="pointer-events-none fixed z-[9999] bg-[#2d2d2d] text-white px-4 py-2.5 rounded-xl shadow-2xl flex flex-col gap-1 border border-gray-600/50"
@@ -69,7 +67,6 @@ const Module1 = () => {
 				</div>
 			)}
 
-			{/* --- Ligne 1 : KPIs --- */}
 			<div className="grid grid-cols-4 gap-4 lg:gap-6">
 				<KpiCard title="Logements Sociaux" value={data.kpis.logementsSociaux.value} icon={<Home size={28} />} color="bg-[#e0e7ff] text-[#6366f1]" />
 				<KpiCard title="Taux de chômage" value={data.kpis.chomage.value} icon={<Percent size={28} />} color="bg-[#e0f2fe] text-[#0ea5e9]" />
@@ -77,10 +74,8 @@ const Module1 = () => {
 				<KpiCard title="Logements FR" value={data.kpis.logementsTotal.value} icon={<Building2 size={28} />} color="bg-[#ede9fe] text-[#7c3aed]" />
 			</div>
 
-			{/* --- Ligne 2 : Zone Principale --- */}
 			<div className="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6 pb-4">
 				
-				{/* Zone de la Carte */}
 				<div className="xl:col-span-2 bg-white p-5 rounded-[1rem] shadow-sm relative flex flex-col min-h-[500px] overflow-hidden">
 					<div className="flex justify-between items-start mb-4 z-10">
 						<div>
@@ -105,7 +100,6 @@ const Module1 = () => {
 							height={600}
 							style={{ width: "100%", height: "100%", maxHeight: "100%" }}
 						>
-							{/* NOUVEAU : On encapsule les tracés dans un ZoomableGroup */}
 							<ZoomableGroup zoom={1} maxZoom={5}>
 								<Geographies geography={geoUrl}>
 									{({ geographies }) =>
@@ -153,7 +147,6 @@ const Module1 = () => {
 						</ComposableMap>
 					</div>
 					
-					{/* NOUVELLE ASTUCE : On ajoute une mention pour dire à l'utilisateur qu'il peut zoomer */}
 					<div className="absolute bottom-5 left-5 flex flex-col gap-1 pointer-events-none">
 						<p className="text-gray-300 font-medium italic text-sm">
 							Données : {data.map.length} départements chargés
@@ -164,10 +157,8 @@ const Module1 = () => {
 					</div>
 				</div>
 
-				{/* Colonne de droite (Graphique + Liens) */}
 				<div className="flex flex-col gap-4 lg:gap-6">
 					
-					{/* Le Graphique */}
 					<div className="bg-white p-5 rounded-[1rem] shadow-sm flex flex-col min-h-[350px]">
 						<h3 className="text-xs font-black text-gray-400 mb-4 uppercase tracking-[0.2em]">
 							Top 5 Départements : Construction
@@ -204,7 +195,6 @@ const Module1 = () => {
 						</div>
 					</div>
 
-					{/* Les QuickLinks */}
 					<div className="grid grid-cols-3 gap-3">
 						<QuickLink icon={<Users size={20} />} label="Démographie" color="text-purple-500" />
 						<QuickLink icon={<Home size={20} />} label="Parc Immo" color="text-blue-500" />
