@@ -8,6 +8,7 @@ import Identification from "./page/identification/identification";
 import Dashboard from "./page/admin/dashbord";
 import Module1 from "./page/module1/module1";
 import Module2 from "./page/module2/module2";
+import Module3 from "./page/module3/module3";
 
 const GuestLayout = () => {
 	return (
@@ -56,6 +57,7 @@ function App() {
 				<Route path="/" element={<Module1 />} />
 				<Route path="/module1" element={<Module1 />} />
 				<Route path="/module2" element={<Module2 />} />
+				<Route path="/module3" element={<Module3 />} />
 			</Route>
 
 			<Route element={<AdminLayout />}>
