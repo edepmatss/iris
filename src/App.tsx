@@ -17,7 +17,7 @@ const GuestLayout = () => {
 		<div className="flex w-screen h-screen bg-white overflow-hidden text-black">
 			<Navbar />
 			<main className="flex-1 relative flex flex-col bg-gray-50">
-				<Header title="Espace Apprentissage" />
+				<Header title={localStorage.getItem('isAdmin') === 'true' ? "Espace Admin" : "Espace Apprentissage"} />
 				<div className="flex-1 overflow-y-auto">
 					<Outlet />
 				</div>
