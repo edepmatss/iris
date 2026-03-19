@@ -10,6 +10,7 @@ import Regions from "./page/regions/regions";
 import Departements from "./page/departements/departements";
 import Map from "./page/map/map";
 import Accueil from "./page/accueil/accueil";
+import Gestiondonnees from "./page/admin/gestiondonnees";
 
 const GuestLayout = () => {
 	return (
@@ -63,6 +64,7 @@ function App() {
 
 			<Route element={<AdminLayout />}>
 				<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="/charts" element={<Gestiondonnees />} />
 			</Route>
 
 			<Route path="*" element={<Navigate to="/" replace />} />
