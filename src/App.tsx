@@ -6,7 +6,7 @@ import Header from "./components/header/Header";
 
 import Identification from "./page/identification/identification";
 import Dashboard from "./page/admin/dashbord";
-import Module1 from "./page/regions/regions";
+import Regions from "./page/regions/regions";
 import Module2 from "./page/module2/module2";
 import Module3 from "./page/module3/module3";
 import Accueil from "./page/accueil/accueil";
@@ -56,7 +56,7 @@ function App() {
 
 			<Route element={<GuestLayout />}>
 				<Route path="/" element={<Accueil />} />
-				<Route path="/module1" element={<Module1 />} />
+				<Route path="/regions" element={<Regions />} />
 				<Route path="/module2" element={<Module2 />} />
 				<Route path="/module3" element={<Module3 />} />
 			</Route>

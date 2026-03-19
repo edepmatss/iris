@@ -49,8 +49,8 @@ const NAV_ITEMS_ADMIN = [
 
 const NAV_ITEMS_USER = [
 	{
-		id: 'module1',
-		label: 'Module 1',
+		id: 'regions',
+		label: 'Régions',
 		icon: (
 			<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
 				<path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
@@ -113,10 +113,8 @@ export default function Navbar() {
 								onClick={() => setActiveItem(item.id)}
 								to={item.id}
 								className={`flex items-center w-full py-4 transition-all duration-300 ${isOpen ? 'px-8 gap-4' : 'justify-center px-0'
-									} ${isActive
-										? isAdmin ? 'bg-[#525252] text-white' : 'text-white'
-										: `text-[#9ca3af] hover:text-gray-200 ${isAdmin ? 'hover:bg-[#4a4a4a]' : 'hover:translate-x-2'}`
-									}`}
+									} ${isActive ? 'bg-[#525252] text-white' : `text-[#9ca3af] hover:text-gray-200 hover:bg-[#4a4a4a]`}`
+								}
 							>
 								<div className={`shrink-0 transition-transform duration-300 ${isActive ? 'text-white' : 'text-[#9ca3af]'}`}>
 									{item.icon}
@@ -124,8 +122,7 @@ export default function Navbar() {
 
 								{isOpen && (
 									<span
-										className={`${isAdmin ? 'text-[15px] leading-tight whitespace-pre-line' : 'text-[20px]'} ${isActive ? (isAdmin ? 'font-medium' : 'text-[28px] font-bold tracking-wide') : 'font-normal'
-											}`}
+										className={`text-[15px] leading-tight whitespace-pre-line text-[20px]' ${isActive ? 'font-medium' : 'font-normal'}`}
 									>
 										{isAdmin ? item.label : item.label}
 									</span>
