@@ -89,7 +89,7 @@ const NAV_ITEMS_USER = [
 export default function Navbar() {
 	const isAdmin = localStorage.getItem("isAdmin") === "true";
 	const currentNavItems = isAdmin ? NAV_ITEMS_ADMIN : NAV_ITEMS_USER;
-	const [activeItem, setActiveItem] = useState(isAdmin ? 'dashboard' : 'module1');
+	const [activeItem, setActiveItem] = useState(isAdmin ? 'dashboard' : ''); // '' pour rediriger vers la page d'accueil dans le cas ou on est pas admin
 	const [isOpen, setIsOpen] = useState(true);
 
 	const handleLogout = () => {
