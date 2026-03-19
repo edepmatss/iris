@@ -3,6 +3,7 @@ import logo from '../assets/Logo1.svg';
 import logoIcon from '../assets/logoIcon.svg';
 import diagram from '../assets/diagram.svg';
 import { Link } from 'react-router-dom';
+import { LandPlot, MapPinned } from 'lucide-react'
 
 const NAV_ITEMS_ADMIN = [
 	{
@@ -52,23 +53,19 @@ const NAV_ITEMS_USER = [
 		id: 'regions',
 		label: 'Régions',
 		icon: (
-			<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
-				<path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-			</svg>
+			<LandPlot />
 		),
 	},
 	{
-		id: 'module2',
-		label: 'Module 2',
+		id: 'departements',
+		label: 'Départements',
 		icon: (
-			<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
-				<path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-			</svg>
+			<MapPinned />
 		),
 	},
 	{
-		id: 'module3',
-		label: 'Module 3',
+		id: 'map',
+		label: 'Map',
 		icon: (
 			<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
 				<path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />

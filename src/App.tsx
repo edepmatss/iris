@@ -7,8 +7,8 @@ import Header from "./components/header/Header";
 import Identification from "./page/identification/identification";
 import Dashboard from "./page/admin/dashbord";
 import Regions from "./page/regions/regions";
-import Module2 from "./page/module2/module2";
-import Module3 from "./page/module3/module3";
+import Departements from "./page/departements/departements";
+import Map from "./page/map/map";
 import Accueil from "./page/accueil/accueil";
 
 const GuestLayout = () => {
@@ -57,8 +57,8 @@ function App() {
 			<Route element={<GuestLayout />}>
 				<Route path="/" element={<Accueil />} />
 				<Route path="/regions" element={<Regions />} />
-				<Route path="/module2" element={<Module2 />} />
-				<Route path="/module3" element={<Module3 />} />
+				<Route path="/departements" element={<Departements />} />
+				<Route path="/map" element={<Map />} />
 			</Route>
 
 			<Route element={<AdminLayout />}>
