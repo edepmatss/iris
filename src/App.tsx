@@ -6,7 +6,7 @@ import Header from "./components/header/Header";
 
 import Identification from "./page/identification/identification";
 import Dashboard from "./page/admin/dashbord";
-import Module1 from "./page/module1/module1";
+import Module1 from "./page/regions/regions";
 import Module2 from "./page/module2/module2";
 import Module3 from "./page/module3/module3";
 import Accueil from "./page/accueil/accueil";
