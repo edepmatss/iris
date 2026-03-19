@@ -2,7 +2,9 @@ import useFetchData from "../../utils/useFetchData";
 
 export default function Module1() {
     const { data, loading } = useFetchData("module1")
-    console.log(data?.map)
+    data?.map?.forEach((element: any) => {
+        console.log(element.code)
+    });
 
     if (!data || loading) {
         return (
