@@ -104,7 +104,7 @@ export default function Navbar() {
 				</div>
 
 				<nav className="flex flex-col w-full z-10">
-					{currentNavItems.map((item, index) => {
+					{currentNavItems.map((item) => {
 						const isActive = activeItem === item.id;
 						return (
 							<Link
@@ -124,12 +124,6 @@ export default function Navbar() {
 										className={`text-[15px] leading-tight whitespace-pre-line text-[20px]' ${isActive ? 'font-medium' : 'font-normal'}`}
 									>
 										{isAdmin ? item.label : item.label}
-									</span>
-								)}
-
-								{!isOpen && !isAdmin && (
-									<span className={`text-[20px] ${isActive ? 'font-bold text-white' : 'font-normal text-[#9ca3af]'}`}>
-										{index + 1}
 									</span>
 								)}
 							</Link>
