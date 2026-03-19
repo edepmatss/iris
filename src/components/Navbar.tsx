@@ -80,11 +80,13 @@ const NAV_ITEMS_USER = [
 export default function Navbar() {
 	const isAdmin = localStorage.getItem("isAdmin") === "true";
 	const currentNavItems = isAdmin ? NAV_ITEMS_ADMIN : NAV_ITEMS_USER;
-	const [activeItem, setActiveItem] = useState(isAdmin ? 'dashboard' : ''); // '' pour rediriger vers la page d'accueil dans le cas ou on est pas admin
+	const [activeItem, setActiveItem] = useState(isAdmin ? 'dashboard' : ''); // pour rediriger vers la page d'accueil dans le cas ou on est pas admin
 	const [isOpen, setIsOpen] = useState(true);
+	const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
 	const handleLogout = () => {
 		localStorage.removeItem("isAdmin");
+		window.location.href = "/";
 	};
 
 	return (
@@ -140,17 +142,48 @@ export default function Navbar() {
 
 				{isAdmin && (
 					<div className={`mt-auto mb-10 z-10 w-full flex flex-col ${isOpen ? 'px-8' : 'px-0 items-center'}`}>
-						<Link
-							to="/"
-							onClick={handleLogout}
-							className={`flex items-center py-3 w-full transition-colors duration-300 text-red-400 hover:text-red-300 hover:bg-[#4a4a4a] rounded-md ${isOpen ? 'gap-4 px-4' : 'justify-center px-0'
-								}`}
-						>
-							<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-6 h-6 shrink-0">
-								<path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-							</svg>
-							{isOpen && <span className="text-[15px] font-medium">Déconnexion</span>}
-						</Link>
+
+						{showLogoutConfirm ? (
+
+							<div className="flex flex-col items-center gap-2 w-full px-2 animate-fade-in text-center">
+								{isOpen && <span className="text-gray-300 text-sm font-medium mb-1">Se déconnecter ?</span>}
+
+								<div className="flex gap-2 w-full">
+
+									<button
+										onClick={handleLogout}
+										title="Oui, se déconnecter"
+										className="flex-1 py-2 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-md transition-colors text-sm font-bold flex items-center justify-center"
+									>
+										{isOpen ? "Oui" : "✓"}
+									</button>
+
+									<button
+										onClick={() => setShowLogoutConfirm(false)}
+										title="Annuler"
+										className="flex-1 py-2 bg-gray-600/50 text-gray-300 hover:bg-gray-500 hover:text-white rounded-md transition-colors text-sm font-bold flex items-center justify-center"
+									>
+										{isOpen ? "Non" : "✕"}
+									</button>
+								</div>
+							</div>
+						) : (
+
+							<button
+								onClick={(e) => {
+									e.preventDefault();
+									setShowLogoutConfirm(true);
+								}}
+								className={`flex items-center py-3 w-full transition-colors duration-300 text-red-400 hover:text-red-300 hover:bg-[#4a4a4a] rounded-md ${isOpen ? 'gap-4 px-4' : 'justify-center px-0'
+									}`}
+							>
+								<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-6 h-6 shrink-0">
+									<path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+								</svg>
+								{isOpen && <span className="text-[15px] font-medium">Déconnexion</span>}
+							</button>
+						)}
+
 					</div>
 				)}
 
