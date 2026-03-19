@@ -11,6 +11,7 @@ import Departements from "./page/departements/departements";
 import Map from "./page/map/map";
 import Accueil from "./page/accueil/accueil";
 import Gestiondonnees from "./page/admin/gestiondonnees";
+import ConfGraphs from "./page/admin/confgraphs";
 
 const GuestLayout = () => {
 	return (
@@ -64,7 +65,8 @@ function App() {
 
 			<Route element={<AdminLayout />}>
 				<Route path="/dashboard" element={<Dashboard />} />
-				<Route path="/charts" element={<Gestiondonnees />} />
+				<Route path="/data" element={<Gestiondonnees />} />
+				<Route path="/charts" element={<ConfGraphs />} />
 			</Route>
 
 			<Route path="*" element={<Navigate to="/" replace />} />
