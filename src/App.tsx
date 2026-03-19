@@ -53,7 +53,6 @@ const AdminLayout = () => {
 function App() {
 	return (
 		<Routes>
-			<Route path="/admin/login" element={<Identification />} />
 
 			<Route element={<GuestLayout />}>
 				<Route path="/" element={<Accueil />} />
@@ -63,6 +62,8 @@ function App() {
 				<Route path="/module4" element={<Module4 />} />
 			</Route>
 
+			<Route path="/admin/login" element={<Identification />} />
+			
 			<Route element={<AdminLayout />}>
 				<Route path="/dashboard" element={<Dashboard />} />
 			</Route>
