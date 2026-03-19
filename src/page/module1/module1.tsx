@@ -107,7 +107,7 @@ const Module1 = () => {
 												<Geography
 													key={geo.rsmKey}
 													geography={geo}
-													fill={currentDept ? colorScale(currentDept.value) : "#ffffff"}
+													fill={currentDept ? colorScale(currentDept.value) : "#c3c3c3"}
 													stroke="#ffffff"
 													strokeWidth={0.5}
 													style={{
