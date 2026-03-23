@@ -22,7 +22,6 @@ export default function Departements() {
 
     if (loading) return <div className="p-6 text-gray-500">Chargement...</div>;
 
-    // --- VUE DÉTAIL ---
     if (selectedDep && data?.stats) {
         const s = data.stats;
         return (
@@ -60,7 +59,6 @@ export default function Departements() {
         );
     }
 
-    // --- VUE LISTE ---
     const filteredDeps = data?.departements?.filter((dep: any) => 
         dep.nom.toLowerCase().includes(searchTerm.toLowerCase()) || dep.code.includes(searchTerm)
     );

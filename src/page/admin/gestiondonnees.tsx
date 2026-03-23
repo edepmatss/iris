@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { MoreVertical, FileText, BarChart2, Loader2, Trash2 } from 'lucide-react';
 
-// Type correspondant aux données que ton API est censée renvoyer
 interface Donnee {
     id?: string | number;
     name: string;
@@ -18,7 +17,6 @@ export default function GestionDonnees() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Fonction qui interroge l'API pour récupérer les données de la BDD
     const fetchDonnees = async () => {
         setIsLoading(true);
         setError(null);
@@ -29,10 +27,8 @@ export default function GestionDonnees() {
             }
             const data = await response.json();
 
-            // Gestion de la structure de l'API (elle peut renvoyer un tableau direct, ou { data: [...] })
             const dataArray = Array.isArray(data) ? data : (data.data || []);
 
-            // On trie les données pour avoir les plus récentes en premier (si la BDD ne le fait pas déjà)
             const sortedData = dataArray.sort((a: any, b: any) => {
                 return new Date(b.date).getTime() - new Date(a.date).getTime();
             });
@@ -47,28 +43,20 @@ export default function GestionDonnees() {
     };
 
     useEffect(() => {
-        // 1. On charge les données au lancement de la page
         fetchDonnees();
 
-        // 2. On "écoute" le signal envoyé par la page de configuration (confgraphs.tsx)
         window.addEventListener('donnees_mises_a_jour', fetchDonnees);
 
-        // 3. On nettoie l'écouteur si on quitte la page
         return () => {
             window.removeEventListener('donnees_mises_a_jour', fetchDonnees);
         };
     }, []);
 
-    // Fonction optionnelle pour supprimer un élément (nécessite que ton API gère la méthode DELETE)
     const handleDelete = async (id: string | number | undefined) => {
         if (!id) return;
         if (!confirm("Voulez-vous vraiment supprimer cet élément ?")) return;
 
         try {
-            // Exemple d'appel DELETE : 
-            // await fetch(`https://iris-db.alwaysdata.net/?id=${id}`, { method: 'DELETE' });
-
-            // Mise à jour de l'affichage local immédiatement pour plus de fluidité
             setDonnees(prev => prev.filter(item => item.id !== id));
         } catch (err) {
             console.error("Erreur lors de la suppression", err);
@@ -102,7 +90,6 @@ export default function GestionDonnees() {
                         </thead>
                         <tbody className="divide-y divide-gray-100">
 
-                            {/* ÉTAT 1 : Chargement en cours */}
                             {isLoading ? (
                                 <tr>
                                     <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
@@ -112,7 +99,6 @@ export default function GestionDonnees() {
                                 </tr>
                             ) :
 
-                                /* ÉTAT 2 : Erreur de l'API */
                                 error ? (
                                     <tr>
                                         <td colSpan={7} className="px-6 py-8 text-center text-red-500 font-medium">
@@ -121,7 +107,6 @@ export default function GestionDonnees() {
                                     </tr>
                                 ) :
 
-                                    /* ÉTAT 3 : Base de données vide */
                                     donnees.length === 0 ? (
                                         <tr>
                                             <td colSpan={7} className="px-6 py-8 text-center text-gray-500 font-medium">
@@ -130,7 +115,6 @@ export default function GestionDonnees() {
                                         </tr>
                                     ) :
 
-                                        /* ÉTAT 4 : Affichage des données */
                                         (
                                             donnees.map((item, index) => (
                                                 <tr key={item.id || index} className="hover:bg-gray-50 transition-colors">

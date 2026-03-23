@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useFetchData from "../../utils/useFetchData"; 
+import useFetchData from "../../utils/useFetchData";
 import { Bar } from "react-chartjs-2";
 import {
     Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend
@@ -15,20 +15,17 @@ const fixText = (text: string) => {
     if (!text) return "";
     let fixed = text;
 
-    // 1. Phrases complexes et grammaire spécifique (Priorité 1)
     fixed = fixed.replace(/s['’]y\s+[\?\uFFFD]l[\?\uFFFD]ve\s+[\?\uFFFD]/gi, "s'y élève à");
     fixed = fixed.replace(/derni[\?\uFFFD]res/gi, "dernières");
     fixed = fixed.replace(/ch[\?\uFFFD]mage/gi, "chômage");
     fixed = fixed.replace(/[\?\uFFFD]l[\?\uFFFD]ve/gi, "élève");
 
-    // 2. Régions
     fixed = fixed.replace(/PROVENCE-ALPES-C[\?\uFFFD]TE D'AZUR/gi, "Provence-Alpes-Côte d'Azur");
     fixed = fixed.replace(/AUVERGNE-RH[\?\uFFFD]NE-ALPES/gi, "Auvergne-Rhône-Alpes");
     fixed = fixed.replace(/BOURGOGNE-FRANCHE-COMT[\?\uFFFD]/gi, "Bourgogne-Franche-Comté");
     fixed = fixed.replace(/[\?\uFFFD]LE-DE-FRANCE/gi, "Île-de-France");
     fixed = fixed.replace(/LA R[\?\uFFFD]UNION/gi, "La Réunion");
 
-    // 3. Départements
     fixed = fixed.replace(/Rh[\?\uFFFD]ne/gi, "Rhône");
     fixed = fixed.replace(/Ard[\?\uFFFD]che/gi, "Ardèche");
     fixed = fixed.replace(/Dr[\?\uFFFD]me/gi, "Drôme");
@@ -44,7 +41,6 @@ const fixText = (text: string) => {
     fixed = fixed.replace(/Pyr[\?\uFFFD]n[\?\uFFFD]es/gi, "Pyrénées");
     fixed = fixed.replace(/H[\?\uFFFD]rault/gi, "Hérault");
 
-    // 4. Nettoyage final (Remplacement par 'é' pour le reste)
     fixed = fixed.replace(/[\uFFFD\?]/g, "é");
 
     return fixed;
@@ -63,7 +59,6 @@ export default function Regions() {
         );
     }
 
-    // --- VUE 1 : Liste de toutes les régions ---
     if (!selectedRegion && data?.regions) {
         return (
             <div className="p-6">
@@ -86,19 +81,15 @@ export default function Regions() {
         );
     }
 
-    // --- VUE 2 : Détail de la région sélectionnée ---
     if (selectedRegion && data?.region) {
 
-        // Nettoyage complet des graphiques (Labels ET Légendes)
         if (data.charts) {
-            // Axes X (Noms des départements)
             if (data.charts.logementsSociauxByDep?.labels) {
                 data.charts.logementsSociauxByDep.labels = data.charts.logementsSociauxByDep.labels.map((l: string) => fixText(l));
             }
             if (data.charts.chomageByDep?.labels) {
                 data.charts.chomageByDep.labels = data.charts.chomageByDep.labels.map((l: string) => fixText(l));
             }
-            // Légendes (Haut du graphique)
             if (data.charts.logementsSociauxByDep?.datasets?.[0]) {
                 data.charts.logementsSociauxByDep.datasets[0].label = fixText(data.charts.logementsSociauxByDep.datasets[0].label);
             }
@@ -124,7 +115,6 @@ export default function Regions() {
                     <p>{fixText(data.analytical_text)}</p>
                 </div>
 
-                {/* KPIs Nettoyés */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                     {data.kpis && Object.entries(data.kpis).map(([key, kpi]: [string, any]) => (
                         <div key={key} className="bg-white p-5 rounded shadow-sm border-l-4 border-indigo-500">
@@ -138,7 +128,6 @@ export default function Regions() {
                     ))}
                 </div>
 
-                {/* Graphiques */}
                 {data.charts && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                         <div className="bg-white p-4 rounded shadow-sm border border-gray-100">
@@ -152,7 +141,6 @@ export default function Regions() {
                     </div>
                 )}
 
-                {/* Tableau Nettoyé */}
                 <div className="bg-white rounded shadow-sm border border-gray-100 overflow-hidden">
                     <table className="w-full text-left border-collapse">
                         <thead className="bg-gray-50 text-gray-600 border-b">
