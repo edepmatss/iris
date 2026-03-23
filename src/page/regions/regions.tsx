@@ -2,14 +2,15 @@ import useFetchData from "../../utils/useFetchData";
 
 export default function Module1() {
     const { data, loading } = useFetchData("module1")
-    data?.map?.forEach((element: any) => {
-        console.log(element.code)
-    });
 
     if (!data || loading) {
         return (
             <div className="flex h-full items-center justify-center bg-[#D5D5D8] font-medium text-gray-400">
-
+                {
+                    data?.map?.forEach((element: any) => {
+                        <p color="#000000">{element.code}</p>
+                    })
+                }
 			</div>
         )
     }
