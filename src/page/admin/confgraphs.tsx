@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ScatterChart, BubblesIcon, PieChart, LineChart, BarChart, BarChart2 } from 'lucide-react'
+import { useState, useEffect } from 'react';
+import { ScatterChart, BubblesIcon, PieChart, LineChart, BarChart, BarChart2, Loader2 } from 'lucide-react'
 
 const WIDGET_TYPES = [
     { id: 'scatter', name: 'Nuage de points', icon: <ScatterChart /> },
@@ -13,7 +13,7 @@ const WIDGET_TYPES = [
 export default function ConfGraphs() {
     const [formData, setFormData] = useState({
         widgetType: 'vbar',
-        dataSource: 'donnees_logement_social_2023.csv',
+        dataSource: '',
         graphType: 'Barres Verticales',
         year: 'Année 2023',
         xAxis: '',
@@ -21,12 +21,129 @@ export default function ConfGraphs() {
         filters: ''
     });
 
-    const handleCreate = () => {
-        console.log("Création du graphique avec :", formData);
-        alert("Graphique configuré avec succès !");
+    const [columns, setColumns] = useState<string[]>([]);
+    const [isLoadingData, setIsLoadingData] = useState(false);
+    // Nouvel état pour gérer le chargement lors de la création en BDD
+    const [isCreating, setIsCreating] = useState(false);
+
+    useEffect(() => {
+        if (!formData.dataSource) {
+            setColumns([]);
+            return;
+        }
+
+        setIsLoadingData(true);
+
+        fetch(formData.dataSource)
+            .then(async (response) => {
+                if (!response.ok) throw new Error("Erreur réseau API");
+                const contentType = response.headers.get("content-type");
+
+                if (contentType && contentType.includes("application/json")) {
+                    const data = await response.json();
+                    if (Array.isArray(data) && data.length > 0) {
+                        return Object.keys(data[0]);
+                    } else if (data && typeof data === 'object' && Array.isArray(data.data) && data.data.length > 0) {
+                        return Object.keys(data.data[0]);
+                    }
+                    throw new Error("Structure JSON non reconnue");
+                }
+                else {
+                    const text = await response.text();
+                    const firstLine = text.split('\n')[0];
+                    let headers = firstLine.split(';').map(h => h.replace(/['"\r]/g, '').trim());
+                    if (headers.length <= 1) {
+                        headers = firstLine.split(',').map(h => h.replace(/['"\r]/g, '').trim());
+                    }
+                    if (headers.length > 0 && headers[0] !== "") {
+                        return headers;
+                    }
+                    throw new Error("Impossible de lire les entêtes du fichier");
+                }
+            })
+            .then((fetchedColumns) => {
+                setColumns(fetchedColumns);
+                setFormData(prev => ({
+                    ...prev,
+                    xAxis: prev.xAxis || fetchedColumns[3] || fetchedColumns[0],
+                    yAxis: prev.yAxis || fetchedColumns[5] || fetchedColumns[1]
+                }));
+            })
+            .catch(error => {
+                console.warn("L'API a échoué. Chargement du Fallback.", error);
+                const fallbackColumns = [
+                    "Code région", "Nom de la région", "Code département",
+                    "Nom du département", "Nombre de logements",
+                    "Parc locatif social", "Résidences principales", "Logements vacants"
+                ];
+                setColumns(fallbackColumns);
+                setFormData(prev => ({
+                    ...prev,
+                    xAxis: prev.xAxis || "Nom du département",
+                    yAxis: prev.yAxis || "Parc locatif social"
+                }));
+            })
+            .finally(() => {
+                setIsLoadingData(false);
+            });
+
+    }, [formData.dataSource]);
+
+    // --- LOGIQUE D'ENVOI VERS LA BASE DE DONNÉES (API) ---
+    const handleCreate = async () => {
+        if (!formData.dataSource || !formData.xAxis || !formData.yAxis) {
+            alert("Veuillez remplir au moins la source et les axes X/Y.");
+            return;
+        }
+
+        const cleanSourceName = formData.dataSource.split('/').pop()?.replace('.csv', '') || formData.dataSource;
+        const graphName = `${formData.graphType} : ${formData.yAxis} par ${formData.xAxis}`;
+
+        // On formate l'objet pour ton API
+        const newGraph = {
+            name: graphName,
+            type: 'Graphique',
+            source: cleanSourceName,
+            date: new Date().toISOString(), // Format ISO standard pour les BDD
+            status: 'Actif',
+            widgetType: formData.widgetType,
+            xAxis: formData.xAxis,
+            yAxis: formData.yAxis,
+            year: formData.year,
+            filters: formData.filters
+        };
+
+        setIsCreating(true); // On lance le loader du bouton
+
+        try {
+            // Requête POST vers ton API
+            const response = await fetch('https://iris-db.alwaysdata.net/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newGraph)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP: ${response.status}`);
+            }
+
+            // On garde l'événement pour dire à `gestiondonnees.tsx` de refaire un "GET"
+            window.dispatchEvent(new Event('donnees_mises_a_jour'));
+
+            console.log("Graphique enregistré en BDD :", newGraph);
+            alert(`Le graphique "${graphName}" a bien été enregistré dans la base de données !`);
+
+        } catch (error) {
+            console.error("Erreur lors de l'enregistrement :", error);
+            alert("Une erreur est survenue lors de l'enregistrement du graphique en base de données.");
+        } finally {
+            setIsCreating(false);
+        }
     };
 
-    const renderPreview = () => {
+    const renderChartShapes = () => {
         switch (formData.widgetType) {
             case 'vbar':
                 return (
@@ -51,7 +168,7 @@ export default function ConfGraphs() {
             case 'pie':
                 return (
                     <div className="flex items-center justify-center h-full w-full">
-                        <div className="w-32 h-32 rounded-full animate-spin-slow"
+                        <div className="w-24 h-24 rounded-full animate-spin-slow"
                             style={{ background: 'conic-gradient(#8B5CF6 0% 35%, #60A5FA 35% 70%, #C4B5FD 70% 100%)' }}>
                         </div>
                     </div>
@@ -90,6 +207,41 @@ export default function ConfGraphs() {
         }
     };
 
+    const renderPreview = () => {
+        return (
+            <div className="relative w-full h-full flex flex-col p-2 pt-4">
+
+                {formData.year && (
+                    <div className="absolute top-0 right-2 text-[10px] font-semibold text-[#7165E3] bg-white border border-[#C4B5FD] px-2 py-0.5 rounded shadow-sm z-10">
+                        {formData.year}
+                    </div>
+                )}
+
+                <div className="flex-1 w-full flex flex-col min-h-0">
+                    <div className="flex-1 flex min-h-0">
+                        {formData.yAxis && (
+                            <div className="w-8 flex items-center justify-center shrink-0">
+                                <span className="-rotate-90 text-[10px] font-medium text-gray-500 whitespace-nowrap max-w-[120px] truncate block">
+                                    {formData.yAxis}
+                                </span>
+                            </div>
+                        )}
+                        <div className="flex-1 border-l-2 border-b-2 border-gray-300 relative">
+                            <div className="absolute inset-0 pb-1 pl-1">
+                                {renderChartShapes()}
+                            </div>
+                        </div>
+                    </div>
+                    {formData.xAxis && (
+                        <div className="h-6 flex items-center justify-center text-[10px] font-medium text-gray-500 whitespace-nowrap truncate w-full pl-8">
+                            {formData.xAxis}
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
+    };
+
     return (
         <div className="flex flex-col gap-8 max-w-7xl mx-auto w-full">
 
@@ -114,7 +266,6 @@ export default function ConfGraphs() {
                 </div>
             </section>
 
-            {/* SECTION CONFIGURATION */}
             <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 flex flex-col">
 
                 <div className="flex items-center gap-2 mb-6 border-b pb-4">
@@ -157,8 +308,9 @@ export default function ConfGraphs() {
                                 onChange={(e) => setFormData({ ...formData, dataSource: e.target.value })}
                                 className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7165E3] focus:border-transparent text-sm text-gray-600 bg-white"
                             >
-                                <option value="fichier1.csv">fichier1.csv</option>
-                                <option value="fichier2.csv">fichier2.csv</option>
+                                <option value="">-- Choisir une source --</option>
+                                <option value="https://iris-db.alwaysdata.net/">API Iris (https://iris-db.alwaysdata.net/)</option>
+                                <option value="logements-et-logements-sociaux-dans-les-departements.csv">CSV : logements-et-logements-sociaux-dans-les-departements</option>
                             </select>
                         </div>
 
@@ -184,22 +336,56 @@ export default function ConfGraphs() {
                         </div>
 
                         <div className="md:col-span-2 mt-2">
-                            <h3 className="text-sm font-semibold text-gray-700 mb-2">Axes & Métriques:</h3>
+                            <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                                Axes & Métriques:
+                                {isLoadingData && <Loader2 className="w-4 h-4 text-[#7165E3] animate-spin" />}
+                            </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <input
-                                    type="text"
-                                    value={formData.xAxis}
-                                    onChange={(e) => setFormData({ ...formData, xAxis: e.target.value })}
-                                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7165E3] focus:border-transparent text-sm text-gray-600 placeholder-gray-400"
-                                    placeholder="Axe X (ex: Categorie, Année)"
-                                />
-                                <input
-                                    type="text"
-                                    value={formData.yAxis}
-                                    onChange={(e) => setFormData({ ...formData, yAxis: e.target.value })}
-                                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7165E3] focus:border-transparent text-sm text-gray-600 placeholder-gray-400"
-                                    placeholder="Axe Y (ex: Valeur, Taux)"
-                                />
+
+                                {columns.length > 0 ? (
+                                    <select
+                                        value={formData.xAxis}
+                                        onChange={(e) => setFormData({ ...formData, xAxis: e.target.value })}
+                                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7165E3] focus:border-transparent text-sm text-gray-600 bg-white"
+                                    >
+                                        <option value="">-- Sélectionner Axe X --</option>
+                                        {columns.map(col => (
+                                            <option key={col} value={col}>{col}</option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <input
+                                        type="text"
+                                        value={formData.xAxis}
+                                        onChange={(e) => setFormData({ ...formData, xAxis: e.target.value })}
+                                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7165E3] focus:border-transparent text-sm text-gray-600 placeholder-gray-400 disabled:bg-gray-50"
+                                        placeholder="Axe X (ex: Categorie, Année)"
+                                        disabled={isLoadingData}
+                                    />
+                                )}
+
+                                {columns.length > 0 ? (
+                                    <select
+                                        value={formData.yAxis}
+                                        onChange={(e) => setFormData({ ...formData, yAxis: e.target.value })}
+                                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7165E3] focus:border-transparent text-sm text-gray-600 bg-white"
+                                    >
+                                        <option value="">-- Sélectionner Axe Y --</option>
+                                        {columns.map(col => (
+                                            <option key={col} value={col}>{col}</option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <input
+                                        type="text"
+                                        value={formData.yAxis}
+                                        onChange={(e) => setFormData({ ...formData, yAxis: e.target.value })}
+                                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7165E3] focus:border-transparent text-sm text-gray-600 placeholder-gray-400 disabled:bg-gray-50"
+                                        placeholder="Axe Y (ex: Valeur, Taux)"
+                                        disabled={isLoadingData}
+                                    />
+                                )}
+
                             </div>
                         </div>
 
@@ -226,9 +412,12 @@ export default function ConfGraphs() {
 
                         <button
                             onClick={handleCreate}
-                            className="w-full mt-6 bg-[#7165E3] hover:bg-[#5b51c4] text-white font-bold py-3 rounded-lg shadow-sm transition-colors"
+                            disabled={isCreating}
+                            className={`w-full mt-6 text-white font-bold py-3 rounded-lg shadow-sm transition-colors flex justify-center items-center gap-2 
+                                ${isCreating ? 'bg-[#5b51c4] cursor-not-allowed' : 'bg-[#7165E3] hover:bg-[#5b51c4]'}`}
                         >
-                            Créer le Graphique
+                            {isCreating && <Loader2 className="w-5 h-5 animate-spin" />}
+                            {isCreating ? 'Création en cours...' : 'Créer le Graphique'}
                         </button>
                     </div>
 
