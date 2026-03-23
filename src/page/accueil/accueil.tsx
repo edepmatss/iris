@@ -65,7 +65,7 @@ export default function Accueil() {
                         id: "chomage",
                         label: "Taux de chômage",
                         value: data.kpis?.tauxChomage?.value || "7.1 %",
-                        trend: "Moyenne nationale",
+                        trend: "Moyenne nationale 2022",
                         isUp: false,
                         color: "orange"
                     },
@@ -73,7 +73,7 @@ export default function Accueil() {
                         id: "pauvrete",
                         label: "Taux de pauvreté",
                         value: data.kpis?.tauxPauvrete?.value || "14.5 %",
-                        trend: "Moyenne nationale",
+                        trend: "Moyenne nationale 2022",
                         isUp: false,
                         color: "red"
                     }
