@@ -10,6 +10,7 @@ import Module1 from "./page/module1/module1";
 import Module2 from "./page/module2/module2";
 import Module3 from "./page/module3/module3";
 import Module4 from "./page/module4/module4";
+import Module5 from "./page/module5/module5";
 import Accueil from "./page/accueil/accueil";
 
 const GuestLayout = () => {
@@ -17,7 +18,13 @@ const GuestLayout = () => {
 		<div className="flex w-screen h-screen bg-white overflow-hidden text-black">
 			<Navbar />
 			<main className="flex-1 relative flex flex-col bg-gray-50">
-				<Header title={localStorage.getItem('isAdmin') === 'true' ? "Espace Admin" : "Espace Apprentissage"} />
+				<Header
+					title={
+						localStorage.getItem("isAdmin") === "true"
+							? "Espace Admin"
+							: "Espace Apprentissage"
+					}
+				/>
 				<div className="flex-1 overflow-y-auto">
 					<Outlet />
 				</div>
@@ -37,9 +44,10 @@ const AdminLayout = () => {
 		<div className="flex w-screen h-screen bg-white overflow-hidden text-black">
 			<Navbar />
 			<main className="flex-1 relative flex flex-col bg-gray-50">
-
 				<div className="bg-white border-b border-gray-200 px-10 py-6 shadow-sm z-10">
-					<h1 className="text-2xl font-bold text-[#2D3142]">Espace Administrateur</h1>
+					<h1 className="text-2xl font-bold text-[#2D3142]">
+						Espace Administrateur
+					</h1>
 				</div>
 
 				<div className="flex-1 overflow-y-auto p-10">
@@ -53,17 +61,17 @@ const AdminLayout = () => {
 function App() {
 	return (
 		<Routes>
-
 			<Route element={<GuestLayout />}>
 				<Route path="/" element={<Accueil />} />
 				<Route path="/module1" element={<Module1 />} />
 				<Route path="/module2" element={<Module2 />} />
 				<Route path="/module3" element={<Module3 />} />
 				<Route path="/module4" element={<Module4 />} />
+				<Route path="/module5" element={<Module5 />} />
 			</Route>
 
 			<Route path="/admin/login" element={<Identification />} />
-			
+
 			<Route element={<AdminLayout />}>
 				<Route path="/dashboard" element={<Dashboard />} />
 			</Route>
