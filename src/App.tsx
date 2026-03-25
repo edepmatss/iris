@@ -9,18 +9,18 @@ import {
 } from "react-router-dom";
 import "./App.css";
 
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider } from "./contexts/AuthContext.tsx";
 
-import Home from "./page/Home";
-import Module1 from "./page/Module1";
-import Module2 from "./page/Module2";
-import Module3 from "./page/Module3";
-import Module4 from "./page/Module4";
-import Module5 from "./page/Module5";
-import Login from "./page/Login";
-import PageHeader from "./components/PageHeader";
-import FiltersBar from "./components/FiltersBar";
-import Sidebar from "./components/Sidebar";
+import Home from "./page/Home.tsx";
+import Module1 from "./page/module1.tsx";
+import Module2 from "./page/module2.tsx";
+import Module3 from "./page/module3.tsx";
+import Module4 from "./page/module4.tsx";
+import Module5 from "./page/module5.tsx";
+import Login from "./page/Login.tsx";
+import PageHeader from "./components/PageHeader.tsx";
+import FiltersBar from "./components/FiltersBar.tsx";
+import Sidebar from "./components/Sidebar.tsx";
 
 const TITLES: Record<string, string> = {
 	module1: "Vue Nationale",
