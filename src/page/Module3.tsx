@@ -57,7 +57,7 @@ export default function Module3({ filters }: Module3Props) {
 
 	if (loading)
 		return (
-			<div className="p-10 text-center text-stone-400 font-medium">
+			<div className="p-10 text-center text-slate-400 font-medium">
 				Analyse de la vacance du parc...
 			</div>
 		);
@@ -80,7 +80,7 @@ export default function Module3({ filters }: Module3Props) {
 
 	// 2. COULEURS : On se base sur les nouvelles valeurs formatées
 	const barColors = formattedVacanceData.map((d: VacanceDataPoint) =>
-		d.val > 12 ? "#e05c3a" : d.val > 9 ? "#d97706" : "#059669",
+		d.val > 12 ? "#a855f7" : d.val > 9 ? "#f59e0b" : "#10b981",
 	);
 
 	// --- CONFIGURATION CHART.JS ---
@@ -108,7 +108,7 @@ export default function Module3({ filters }: Module3Props) {
 		scales: {
 			x: {
 				grid: {
-					color: "#f0f0f0",
+					color: "#334155",
 					borderDash: [3, 3],
 				},
 				ticks: {
@@ -130,17 +130,17 @@ export default function Module3({ filters }: Module3Props) {
 			{
 				label: "Rural",
 				data: radarRawData.map((d: RadarDataPoint) => d.A),
-				backgroundColor: "rgba(5, 150, 105, 0.2)",
-				borderColor: "#059669",
-				pointBackgroundColor: "#059669",
+				backgroundColor: "rgba(16, 185, 129, 0.2)",
+				borderColor: "#10b981",
+				pointBackgroundColor: "#10b981",
 				fill: true,
 			},
 			{
 				label: "Urbain",
 				data: radarRawData.map((d: RadarDataPoint) => d.B),
-				backgroundColor: "rgba(14, 116, 144, 0.2)",
-				borderColor: "#0e7490",
-				pointBackgroundColor: "#0e7490",
+				backgroundColor: "rgba(99, 102, 241, 0.2)",
+				borderColor: "#6366f1",
+				pointBackgroundColor: "#6366f1",
 				fill: true,
 			},
 		],
@@ -152,16 +152,16 @@ export default function Module3({ filters }: Module3Props) {
 		plugins: {
 			legend: {
 				position: "bottom" as const,
-				labels: { font: { size: 11 }, color: "#78716c" },
+				labels: { font: { size: 11 }, color: "#94a3b8" },
 			},
 		},
 		scales: {
 			r: {
-				angleLines: { color: "#e2dfd8" },
-				grid: { color: "#e2dfd8" },
+				angleLines: { color: "#334155" },
+				grid: { color: "#334155" },
 				pointLabels: {
 					font: { size: 11 },
-					color: "#78716c",
+					color: "#94a3b8",
 				},
 				ticks: {
 					display: false,
@@ -176,17 +176,17 @@ export default function Module3({ filters }: Module3Props) {
 				<KpiCard
 					label="Taux vacance moyen"
 					value={kpis.tauxVacance?.value}
-					color="border-amber-500"
+					color="border-amber-400"
 				/>
 				<KpiCard
 					label="Résidences principales"
 					value={kpis.residencesPrincipales?.value}
-					color="border-emerald-500"
+					color="border-teal-400"
 				/>
 				<KpiCard
 					label="Résidences secondaires"
 					value={kpis.residencesSecondaires?.value}
-					color="border-cyan-700"
+					color="border-indigo-500"
 				/>
 			</div>
 

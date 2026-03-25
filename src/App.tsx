@@ -7,16 +7,16 @@ import {
 	useLocation,
 	useNavigate,
 } from "react-router-dom";
-import "./App.css";
+import "./App.scss";
 
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 
 import Home from "./page/Home.tsx";
-import Module1 from "./page/module1.tsx";
-import Module2 from "./page/module2.tsx";
-import Module3 from "./page/module3.tsx";
-import Module4 from "./page/module4.tsx";
-import Module5 from "./page/module5.tsx";
+import Module1 from "./page/Module1";
+import Module2 from "./page/Module2";
+import Module3 from "./page/Module3";
+import Module4 from "./page/Module4";
+import Module5 from "./page/Module5";
 import Login from "./page/Login.tsx";
 import PageHeader from "./components/PageHeader.tsx";
 import FiltersBar from "./components/FiltersBar.tsx";
@@ -75,7 +75,7 @@ function AppContent() {
 		location.pathname === "/" ? "home" : location.pathname.substring(1);
 
 	return (
-		<div className="flex min-h-screen bg-[#f5f4f0]">
+		<div className="flex min-h-screen bg-slate-900">
 			{!isLoginPage && (
 				<Sidebar
 					page={page}
@@ -139,7 +139,7 @@ function AppContent() {
 					<Route
 						path="*"
 						element={
-							<div className="p-10 text-stone-400">
+							<div className="p-10 text-slate-400">
 								Page introuvable...
 							</div>
 						}

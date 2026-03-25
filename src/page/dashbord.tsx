@@ -27,15 +27,15 @@ export default function Dashboard() {
 
     return (
         <div
-            className="h-100 bg-slate-100 flex items-start justify-center"
+            className="h-100 bg-slate-900 flex items-start justify-center"
             style={{ padding: "2rem" }}
         >
             <div className="w-full max-w-12xl grid grid-cols-2 gap-5">
                 <div
-                    className="bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-5"
+                    className="bg-slate-800 rounded-2xl border border-slate-700 shadow-sm flex flex-col gap-5"
                     style={{ padding: "1.5rem" }}
                 >
-                    <h3 className="flex items-center gap-2 text-xs font-semibold text-slate-700 tracking-wide m-0">
+                    <h3 className="flex items-center gap-2 text-xs font-semibold text-slate-50 tracking-wide m-0">
                         <FilePlus2 size={15} className="text-slate-400" />
                         Importer des Données
                     </h3>
@@ -61,21 +61,21 @@ export default function Dashboard() {
                         }}
                         onClick={() => inputRef.current?.click()}
                         className={`flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed transition-colors cursor-pointer ${dragging
-                            ? "border-blue-400 bg-blue-50"
-                            : "border-slate-200 bg-slate-50 hover:border-slate-300"
+                            ? "border-indigo-500 bg-indigo-500/10"
+                            : "border-slate-600 bg-slate-900 hover:border-slate-500"
                             }`}
                         style={{ padding: "2.5rem 1.5rem" }}
                     >
                         <Upload size={22} className="text-slate-400" />
                         <p className="text-xs text-slate-400 text-center leading-relaxed m-0">
                             {fileName ? (
-                                <strong className="text-slate-600">
+                                <strong className="text-slate-300">
                                     {fileName}
                                 </strong>
                             ) : (
                                 <>
                                     Glissez-déposez votre fichier{" "}
-                                    <strong className="text-slate-500">
+                                    <strong className="text-slate-400">
                                         .csv
                                     </strong>
                                 </>
@@ -86,7 +86,7 @@ export default function Dashboard() {
                                 e.stopPropagation();
                                 inputRef.current?.click();
                             }}
-                            className="rounded-lg border border-slate-300 bg-white text-xs text-slate-600 font-medium shadow-sm hover:bg-slate-50 cursor-pointer"
+                            className="rounded-lg border border-slate-600 bg-slate-800 text-xs text-slate-300 font-medium shadow-sm hover:bg-slate-700 cursor-pointer"
                             style={{
                                 padding: "0.375rem 1rem",
                                 marginTop: "0.25rem",
@@ -101,13 +101,13 @@ export default function Dashboard() {
                             <span className="text-xs text-slate-500">
                                 Importation en cours...
                             </span>
-                            <span className="text-xs font-semibold text-slate-600">
+                            <span className="text-xs font-semibold text-slate-300">
                                 {progress}%
                             </span>
                         </div>
-                        <div className="w-full h-1.5 rounded-full bg-slate-200 overflow-hidden">
+                        <div className="w-full h-1.5 rounded-full bg-slate-700 overflow-hidden">
                             <div
-                                className="h-full rounded-full bg-blue-500 transition-all duration-700"
+                                className="h-full rounded-full bg-indigo-500 transition-all duration-700"
                                 style={{ width: `${progress}%` }}
                             />
                         </div>
@@ -118,10 +118,10 @@ export default function Dashboard() {
                 </div>
 
                 <div
-                    className="bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-4"
+                    className="bg-slate-800 rounded-2xl border border-slate-700 shadow-sm flex flex-col gap-4"
                     style={{ padding: "1.5rem" }}
                 >
-                    <h3 className="flex items-center gap-2 text-xs font-semibold text-slate-700 tracking-wide m-0">
+                    <h3 className="flex items-center gap-2 text-xs font-semibold text-slate-50 tracking-wide m-0">
                         <ListChecks size={15} className="text-slate-400" />
                         Gérer les Widgets Existants
                     </h3>
@@ -135,14 +135,14 @@ export default function Dashboard() {
                             return (
                                 <li
                                     key={w.id}
-                                    className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 hover:border-slate-200 hover:bg-slate-100 transition-colors"
+                                    className="flex items-center justify-between rounded-xl border border-slate-700/50 bg-slate-900 hover:border-slate-600 hover:bg-slate-800 transition-colors"
                                     style={{ padding: "0.75rem 1rem" }}
                                 >
                                     <div className="flex items-center gap-3">
                                         {isActive ? (
                                             <CheckCircle2
                                                 size={18}
-                                                className="text-emerald-500 shrink-0"
+                                                className="text-teal-400 shrink-0"
                                             />
                                         ) : (
                                             <XCircle
@@ -151,11 +151,11 @@ export default function Dashboard() {
                                             />
                                         )}
                                         <div>
-                                            <p className="m-0 text-sm font-semibold text-slate-700">
+                                            <p className="m-0 text-sm font-semibold text-slate-300">
                                                 {w.name}
                                             </p>
                                             <p
-                                                className={`m-0 text-xs font-medium ${isActive ? "text-emerald-500" : "text-rose-400"}`}
+                                                className={`m-0 text-xs font-medium ${isActive ? "text-teal-400" : "text-rose-400"}`}
                                             >
                                                 Status: {w.status}
                                             </p>
@@ -164,13 +164,13 @@ export default function Dashboard() {
 
                                     <div className="flex items-center gap-1">
                                         <button
-                                            className="rounded-lg border-none bg-transparent cursor-pointer text-slate-400 hover:text-blue-500 hover:bg-blue-50 flex items-center transition-colors"
+                                            className="rounded-lg border-none bg-transparent cursor-pointer text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 flex items-center transition-colors"
                                             style={{ padding: "0.35rem" }}
                                         >
                                             <Pencil size={13} />
                                         </button>
                                         <button
-                                            className="rounded-lg border-none bg-transparent cursor-pointer text-slate-400 hover:text-rose-500 hover:bg-rose-50 flex items-center transition-colors"
+                                            className="rounded-lg border-none bg-transparent cursor-pointer text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 flex items-center transition-colors"
                                             style={{ padding: "0.35rem" }}
                                         >
                                             <Trash2 size={13} />

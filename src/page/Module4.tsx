@@ -44,7 +44,7 @@ export default function Module4({ filters }: Module4Props) {
 
 	if (loading)
 		return (
-			<div className="p-10 text-center text-stone-400">
+			<div className="p-10 text-center text-slate-400">
 				Calcul des dynamiques en cours...
 			</div>
 		);
@@ -58,7 +58,7 @@ export default function Module4({ filters }: Module4Props) {
 			{
 				label: "2021",
 				data: vacEvol.map((d: VacEvolPoint) => d.v21),
-				backgroundColor: "rgba(14, 116, 144, 0.6)",
+				backgroundColor: "rgba(99, 102, 241, 0.6)",
 				borderRadius: { topLeft: 4, topRight: 4 },
 				barPercentage: 0.8,
 				categoryPercentage: 0.7,
@@ -66,7 +66,7 @@ export default function Module4({ filters }: Module4Props) {
 			{
 				label: "2023",
 				data: vacEvol.map((d: VacEvolPoint) => d.v23),
-				backgroundColor: "#0e7490",
+				backgroundColor: "#a855f7",
 				borderRadius: { topLeft: 4, topRight: 4 },
 				barPercentage: 0.8,
 				categoryPercentage: 0.7,
@@ -80,7 +80,7 @@ export default function Module4({ filters }: Module4Props) {
 		plugins: {
 			legend: {
 				position: "top" as const,
-				labels: { font: { size: 11 }, color: "#78716c" },
+				labels: { font: { size: 11 }, color: "#94a3b8" },
 			},
 		},
 		scales: {
@@ -90,7 +90,7 @@ export default function Module4({ filters }: Module4Props) {
 			},
 			y: {
 				grid: {
-					color: "#f0f0f0",
+					color: "#334155",
 					borderDash: [3, 3],
 				},
 				ticks: { font: { size: 11 } },
@@ -103,7 +103,7 @@ export default function Module4({ filters }: Module4Props) {
 		datasets: [
 			{
 				data: [partSociale, 100 - partSociale],
-				backgroundColor: ["#0e7490", "#f5f5f4"],
+				backgroundColor: ["#6366f1", "#334155"],
 				borderWidth: 0,
 				cutout: "75%",
 			},
@@ -124,26 +124,26 @@ export default function Module4({ filters }: Module4Props) {
 				<KpiCard
 					label="Loyer Moyen Social"
 					value={data?.kpis?.loyerMoyen?.value}
-					color="border-cyan-700"
+					color="border-indigo-500"
 					trend="up"
 				/>
 				<KpiCard
 					label="Part Parc Social"
 					value={data?.kpis?.partSociale?.value}
-					color="border-emerald-500"
+					color="border-teal-400"
 					trend="up"
 				/>
 				<KpiCard
 					label="Écart Vacance 21→23"
 					value={data?.kpis?.ecartVacance?.value}
-					color="border-rose-500"
+					color="border-rose-400"
 					trend={data?.kpis?.ecartVacance?.raw > 0 ? "up" : "down"}
 				/>
 			</div>
 
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-				<div className="lg:col-span-2 bg-white border border-stone-200 rounded-2xl p-6 shadow-sm">
-					<h3 className="text-xs font-bold text-stone-500 uppercase mb-6">
+				<div className="lg:col-span-2 bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-sm">
+					<h3 className="text-xs font-bold text-slate-300 uppercase mb-6">
 						Évolution de la vacance 2021 → 2023
 					</h3>
 					<div className="h-[280px] w-full relative">
@@ -151,8 +151,8 @@ export default function Module4({ filters }: Module4Props) {
 					</div>
 				</div>
 
-				<div className="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm flex flex-col items-center">
-					<h3 className="text-xs font-bold text-stone-500 uppercase mb-6 w-full text-left">
+				<div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-sm flex flex-col items-center">
+					<h3 className="text-xs font-bold text-slate-300 uppercase mb-6 w-full text-left">
 						Part du parc social
 					</h3>
 					<div className="relative w-[200px] h-[200px]">
@@ -162,10 +162,10 @@ export default function Module4({ filters }: Module4Props) {
 						/>
 
 						<div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-							<span className="text-2xl font-bold font-['JetBrains_Mono'] text-slate-800">
+							<span className="text-2xl font-bold font-['JetBrains_Mono'] text-white">
 								{partSociale.toFixed(1)}%
 							</span>
-							<span className="text-[10px] text-stone-400">
+							<span className="text-[10px] text-slate-400">
 								Social
 							</span>
 						</div>

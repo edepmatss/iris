@@ -71,14 +71,14 @@ export default function FiltersBar({ filters, setFilters }: FiltersBarProps) {
 	};
 
 	return (
-		<div className="bg-white border border-stone-200 rounded-2xl p-4 mb-6 shadow-sm flex flex-wrap items-end gap-6 animate-fade-in">
-			<div className="flex items-center gap-2 text-stone-400 font-bold text-[11px] tracking-[0.12em] mb-2.5 px-1">
+		<div className="bg-slate-800 border border-slate-700 rounded-2xl p-4 mb-6 shadow-sm flex flex-wrap items-end gap-6 animate-fade-in">
+			<div className="flex items-center gap-2 text-slate-400 font-bold text-[11px] tracking-[0.12em] mb-2.5 px-1">
 				<Filter size={14} strokeWidth={2.5} />
 				FILTRES
 			</div>
 
 			<div className="flex flex-col gap-1.5 min-w-[120px]">
-				<label className="text-[10px] font-bold text-stone-500 uppercase ml-1 tracking-wider">
+				<label className="text-[10px] font-bold text-slate-400 uppercase ml-1 tracking-wider">
 					Année
 				</label>
 				<div className="relative">
@@ -87,21 +87,21 @@ export default function FiltersBar({ filters, setFilters }: FiltersBarProps) {
 						onChange={(e) =>
 							setFilters({ ...filters, annee: e.target.value })
 						}
-						className="w-full appearance-none bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-cyan-700/50 cursor-pointer transition-all"
+						className="w-full appearance-none bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-300 outline-none focus:border-indigo-500/50 cursor-pointer transition-all"
 					>
 						<option value="2023">2023</option>
 						<option value="2022">2022</option>
 						<option value="2021">2021</option>
 					</select>
 					<ChevronDown
-						className="absolute right-3 top-3 text-stone-400 pointer-events-none"
+						className="absolute right-3 top-3 text-slate-500 pointer-events-none"
 						size={14}
 					/>
 				</div>
 			</div>
 
 			<div className="flex flex-col gap-1.5 min-w-[200px]">
-				<label className="text-[10px] font-bold text-stone-500 uppercase ml-1 tracking-wider">
+				<label className="text-[10px] font-bold text-slate-400 uppercase ml-1 tracking-wider">
 					Région
 				</label>
 				<div className="relative">
@@ -118,7 +118,7 @@ export default function FiltersBar({ filters, setFilters }: FiltersBarProps) {
 								setDepartements([]);
 							}
 						}}
-						className="w-full appearance-none bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-cyan-700/50 cursor-pointer transition-all"
+						className="w-full appearance-none bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-300 outline-none focus:border-indigo-500/50 cursor-pointer transition-all"
 					>
 						<option value="">Toutes les régions</option>
 						{regions.map((r) => (
@@ -128,14 +128,14 @@ export default function FiltersBar({ filters, setFilters }: FiltersBarProps) {
 						))}
 					</select>
 					<ChevronDown
-						className="absolute right-3 top-3 text-stone-400 pointer-events-none"
+						className="absolute right-3 top-3 text-slate-500 pointer-events-none"
 						size={14}
 					/>
 				</div>
 			</div>
 
 			<div className="flex flex-col gap-1.5 min-w-[220px]">
-				<label className="text-[10px] font-bold text-stone-500 uppercase ml-1 tracking-wider">
+				<label className="text-[10px] font-bold text-slate-400 uppercase ml-1 tracking-wider">
 					Département
 				</label>
 				<div className="relative">
@@ -145,7 +145,7 @@ export default function FiltersBar({ filters, setFilters }: FiltersBarProps) {
 							setFilters({ ...filters, dept: e.target.value })
 						}
 						disabled={!filters.region}
-						className="w-full appearance-none bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-cyan-700/50 cursor-pointer disabled:opacity-50 disabled:bg-stone-100 transition-all"
+						className="w-full appearance-none bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-300 outline-none focus:border-indigo-500/50 cursor-pointer disabled:opacity-50 disabled:bg-slate-800 transition-all"
 					>
 						<option value="">
 							{filters.region
@@ -163,7 +163,7 @@ export default function FiltersBar({ filters, setFilters }: FiltersBarProps) {
 						))}
 					</select>
 					<ChevronDown
-						className="absolute right-3 top-3 text-stone-400 pointer-events-none"
+						className="absolute right-3 top-3 text-slate-500 pointer-events-none"
 						size={14}
 					/>
 				</div>
@@ -172,7 +172,7 @@ export default function FiltersBar({ filters, setFilters }: FiltersBarProps) {
 			{(filters.annee !== "2023" || filters.region || filters.dept) && (
 				<button
 					onClick={resetFilters}
-					className="flex items-center gap-2 bg-rose-50 text-rose-600 border border-rose-100 px-5 py-2.5 rounded-xl text-[11px] font-bold hover:bg-rose-100 transition-all mb-0.5 active:scale-95"
+					className="flex items-center gap-2 bg-rose-500/10 text-rose-400 border border-rose-500/20 px-5 py-2.5 rounded-xl text-[11px] font-bold hover:bg-rose-500/20 hover:border-rose-500/30 transition-all mb-0.5 active:scale-95"
 				>
 					<RotateCcw size={14} strokeWidth={2.5} />
 					Réinitialiser

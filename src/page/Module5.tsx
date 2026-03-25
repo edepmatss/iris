@@ -50,7 +50,7 @@ export default function Module5({ filters }: Module5Props) {
 
 	if (loading)
 		return (
-			<div className="p-10 text-center text-stone-400">
+			<div className="p-10 text-center text-slate-400">
 				Analyse des territoires en cours...
 			</div>
 		);
@@ -64,12 +64,12 @@ export default function Module5({ filters }: Module5Props) {
 			{
 				label: "Solde naturel",
 				data: dynamiques.map((d: DynamiqueData) => d.naturel),
-				backgroundColor: "#059669",
+				backgroundColor: "#10b981",
 			},
 			{
 				label: "Solde migratoire",
 				data: dynamiques.map((d: DynamiqueData) => d.migratoire),
-				backgroundColor: "#0e7490",
+				backgroundColor: "#6366f1",
 				borderRadius: { topLeft: 4, topRight: 4 },
 			},
 		],
@@ -81,7 +81,7 @@ export default function Module5({ filters }: Module5Props) {
 		plugins: {
 			legend: {
 				position: "top" as const,
-				labels: { font: { size: 11 }, color: "#78716c" },
+				labels: { font: { size: 11 }, color: "#94a3b8" },
 			},
 		},
 		scales: {
@@ -93,7 +93,7 @@ export default function Module5({ filters }: Module5Props) {
 			y: {
 				stacked: true,
 				grid: {
-					color: "#f0f0f0",
+					color: "#334155",
 					borderDash: [3, 3],
 				},
 				ticks: { font: { size: 11 } },
@@ -118,7 +118,7 @@ export default function Module5({ filters }: Module5Props) {
 						dept: d.dept,
 					}),
 				),
-				backgroundColor: "rgba(224, 92, 58, 0.8)",
+				backgroundColor: "rgba(168, 85, 247, 0.8)",
 				pointRadius: 6,
 				pointHoverRadius: 8,
 			},
@@ -136,10 +136,10 @@ export default function Module5({ filters }: Module5Props) {
 				title: {
 					display: true,
 					text: "Migratoire (%)",
-					color: "#78716c",
+					color: "#94a3b8",
 				},
 				grid: {
-					color: "#f0f0f0",
+					color: "#334155",
 					borderDash: [3, 3],
 				},
 				ticks: { font: { size: 11 } },
@@ -148,10 +148,10 @@ export default function Module5({ filters }: Module5Props) {
 				title: {
 					display: true,
 					text: "Variation (%)",
-					color: "#78716c",
+					color: "#94a3b8",
 				},
 				grid: {
-					color: "#f0f0f0",
+					color: "#334155",
 					borderDash: [3, 3],
 				},
 				ticks: { font: { size: 11 } },
@@ -165,7 +165,7 @@ export default function Module5({ filters }: Module5Props) {
 			{
 				label: "Individuel",
 				data: typology.map((d: TypologyData) => d.individuels),
-				backgroundColor: "#d97706",
+				backgroundColor: "#f59e0b",
 				borderRadius: { topLeft: 4, topRight: 4 },
 				barPercentage: 0.8,
 				categoryPercentage: 0.7,
@@ -173,7 +173,7 @@ export default function Module5({ filters }: Module5Props) {
 			{
 				label: "Social",
 				data: typology.map((d: TypologyData) => d.sociaux),
-				backgroundColor: "#0e7490",
+				backgroundColor: "#6366f1",
 				borderRadius: { topLeft: 4, topRight: 4 },
 				barPercentage: 0.8,
 				categoryPercentage: 0.7,
@@ -197,7 +197,7 @@ export default function Module5({ filters }: Module5Props) {
 			},
 			y: {
 				grid: {
-					color: "#f0f0f0",
+					color: "#334155",
 					borderDash: [3, 3],
 				},
 				ticks: { font: { size: 11 } },
@@ -211,22 +211,22 @@ export default function Module5({ filters }: Module5Props) {
 				<KpiCard
 					label="Variation démo. moy."
 					value={data?.kpis?.variationDemo?.value}
-					color="border-cyan-700"
+					color="border-indigo-500"
 				/>
 				<KpiCard
 					label="Solde migratoire moy."
 					value={data?.kpis?.soldeMigratoire?.value}
-					color="border-emerald-500"
+					color="border-teal-400"
 				/>
 				<KpiCard
 					label="Maisons individuelles"
 					value={data?.kpis?.maisonsIndiv?.value}
-					color="border-amber-500"
+					color="border-amber-400"
 				/>
 			</div>
 
-			<div className="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm">
-				<h3 className="text-xs font-bold text-stone-500 uppercase mb-6">
+			<div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-sm">
+				<h3 className="text-xs font-bold text-slate-300 uppercase mb-6">
 					Moteurs de croissance — Solde naturel vs migratoire
 				</h3>
 				<div className="h-[280px] w-full relative">
@@ -235,8 +235,8 @@ export default function Module5({ filters }: Module5Props) {
 			</div>
 
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-				<div className="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm">
-					<h3 className="text-xs font-bold text-stone-500 uppercase mb-6">
+				<div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-sm">
+					<h3 className="text-xs font-bold text-slate-300 uppercase mb-6">
 						Attractivité vs variation globale
 					</h3>
 					<div className="h-[280px] w-full relative">
@@ -244,8 +244,8 @@ export default function Module5({ filters }: Module5Props) {
 					</div>
 				</div>
 
-				<div className="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm">
-					<h3 className="text-xs font-bold text-stone-500 uppercase mb-6">
+				<div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-sm">
+					<h3 className="text-xs font-bold text-slate-300 uppercase mb-6">
 						Typologies — Individuel vs Social
 					</h3>
 					<div className="h-[280px] w-full relative">

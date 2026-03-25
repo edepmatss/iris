@@ -39,7 +39,7 @@ export default function Module2({ filters }: Module2Props) {
 
 	if (loading)
 		return (
-			<div className="p-10 text-center text-stone-400">
+			<div className="p-10 text-center text-slate-400">
 				Chargement du Module Social...
 			</div>
 		);
@@ -52,7 +52,7 @@ export default function Module2({ filters }: Module2Props) {
 			{
 				label: "Départements",
 				data: scatterRawData,
-				backgroundColor: "rgba(14, 116, 144, 0.6)",
+				backgroundColor: "rgba(99, 102, 241, 0.6)",
 				pointRadius: 6,
 				pointHoverRadius: 8,
 			},
@@ -69,14 +69,14 @@ export default function Module2({ filters }: Module2Props) {
 			x: {
 				title: { display: true, text: "Pauvreté (%)" },
 				grid: {
-					color: "#f0f0f0",
+					color: "#334155",
 					borderDash: [3, 3],
 				},
 			},
 			y: {
 				title: { display: true, text: "Social (%)" },
 				grid: {
-					color: "#f0f0f0",
+					color: "#334155",
 					borderDash: [3, 3],
 				},
 			},
@@ -91,13 +91,13 @@ export default function Module2({ filters }: Module2Props) {
 			{
 				label: "Pauvreté",
 				data: distributionRawData.map((d: ChartDataPoint) => d.x),
-				backgroundColor: "#e05c3a",
+				backgroundColor: "#a855f7",
 				borderRadius: { topLeft: 4, topRight: 4 },
 			},
 			{
 				label: "Social",
 				data: distributionRawData.map((d: ChartDataPoint) => d.y),
-				backgroundColor: "#0e7490",
+				backgroundColor: "#6366f1",
 				borderRadius: { topLeft: 4, topRight: 4 },
 			},
 		],
@@ -119,7 +119,7 @@ export default function Module2({ filters }: Module2Props) {
 			},
 			y: {
 				grid: {
-					color: "#f0f0f0",
+					color: "#334155",
 					borderDash: [3, 3],
 				},
 			},
@@ -132,23 +132,23 @@ export default function Module2({ filters }: Module2Props) {
 				<KpiCard
 					label="Chômage"
 					value={data?.kpis?.chomage?.value}
-					color="border-rose-500"
+					color="border-rose-400"
 				/>
 				<KpiCard
 					label="Pauvreté"
 					value={data?.kpis?.pauvrete?.value}
-					color="border-amber-500"
+					color="border-amber-400"
 				/>
 				<KpiCard
 					label="Loyer Moyen"
 					value={data?.kpis?.loyer?.value}
-					color="border-cyan-600"
+					color="border-indigo-500"
 				/>
 			</div>
 
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-				<div className="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm">
-					<h3 className="text-xs font-bold text-stone-500 uppercase mb-6">
+				<div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-sm">
+					<h3 className="text-xs font-bold text-slate-300 uppercase mb-6">
 						Corrélation Pauvreté / Logement Social
 					</h3>
 					<div className="h-[300px] w-full relative">
@@ -159,8 +159,8 @@ export default function Module2({ filters }: Module2Props) {
 					</div>
 				</div>
 
-				<div className="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm">
-					<h3 className="text-xs font-bold text-stone-500 uppercase mb-6">
+				<div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-sm">
+					<h3 className="text-xs font-bold text-slate-300 uppercase mb-6">
 						Distribution par département
 					</h3>
 					<div className="h-[300px] w-full relative">
