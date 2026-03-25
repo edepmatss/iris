@@ -1,38 +1,39 @@
 import { useEffect, useState } from "react";
 
-const API_URL = "https://iris-db.alwaysdata.net/api/stats";
-const API_URL_Local = "http://127.0.0.1:8000/api/stats";
+// On définit les deux URLs
+const API_URL_LOCAL = "http://127.0.0.1:8000/api/stats";
+const API_URL_PROD = "https://iris-db.alwaysdata.net/api/stats";
 
-// Ajout du paramètre optionnel 'search'
-export default function useFetchData(module: string, search?: string) {
-	const [data, setData] = useState<any>(null); // 'any' ou une interface pour plus de précision
+export default function useFetchData(endpoint: string, query?: string) {
+	const [data, setData] = useState<any>(null);
 	const [loading, setLoading] = useState(true);
 
+	// Détection de l'environnement (Vite utilise import.meta.env.DEV)
 	const isLocal = import.meta.env.DEV;
 
 	useEffect(() => {
-		setLoading(true); // On remet le chargement à vrai dès que la recherche change
+		setLoading(true);
 
-		// Construction de l'URL avec le paramètre de requête ?search=
-		const endpoint = module === "module1" ? "dashboard-module1" : module;
-		const queryParam = search
-			? `?search=${encodeURIComponent(search)}`
-			: "";
-		const base = isLocal ? API_URL_Local : API_URL;
+		// On choisit la base en fonction de l'environnement
+		const base = isLocal ? API_URL_LOCAL : API_URL_PROD;
+		const url = query
+			? `${base}/${endpoint}?${query}`
+			: `${base}/${endpoint}`;
 
-		fetch(`${base}/${endpoint}${queryParam}`)
-			.then((res) => res.json())
+		fetch(url, { headers: { Accept: "application/json" } })
+			.then((res) => {
+				if (!res.ok) throw new Error(`Erreur serveur: ${res.status}`);
+				return res.json();
+			})
 			.then((json) => {
 				setData(json);
 				setLoading(false);
 			})
 			.catch((err) => {
-				console.error("Erreur Fetch:", err);
+				console.error("Erreur API IRIS:", err);
 				setLoading(false);
 			});
-
-		// Crucial : On ajoute 'search' ici pour que le fetch se relance à chaque frappe
-	}, [module, search, isLocal]);
+	}, [endpoint, query, isLocal]);
 
 	return { data, loading };
 }
