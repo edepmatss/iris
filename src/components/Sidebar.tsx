@@ -10,6 +10,7 @@ import {
 	ChevronLeft,
 	LogIn,
 	LogOut,
+	Settings,
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext.tsx";
 
@@ -103,6 +104,35 @@ export default function Sidebar({
 						</button>
 					);
 				})}
+
+				{/* admin button qui apparait que quand on est connecté */}
+				{user && (
+					<button
+						key="admin"
+						onClick={() => setPage("admin")}
+						title={!sidebarOpen ? "Admin" : ""}
+						className={`w-full flex items-center rounded-lg mb-1 mt-4 transition-all duration-150 text-[13px] border ${
+							sidebarOpen
+								? "gap-2.5 justify-start px-3 py-2.5"
+								: "gap-0 justify-center p-2.5"
+						} ${
+							page === "admin"
+								? "bg-indigo-500/10 text-indigo-400 font-bold border-indigo-500/30"
+								: "bg-transparent text-slate-400 font-medium border-transparent hover:bg-slate-800"
+						}`}
+					>
+						<span className="shrink-0 flex items-center justify-center w-[18px] h-[18px]">
+							<Settings
+								className="w-full h-full"
+								strokeWidth={page === "admin" ? 2.5 : 2}
+							/>
+						</span>
+						{sidebarOpen && <span>Admin</span>}
+						{sidebarOpen && page === "admin" && (
+							<div className="ml-auto w-1 h-4 rounded-full bg-indigo-500" />
+						)}
+					</button>
+				)}
 			</nav>
 
 			<div className="px-2.5 py-3 border-t border-slate-700">
