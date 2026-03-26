@@ -96,12 +96,6 @@ export default function Module5({ filters }: Module5Props) {
 				position: "top" as const,
 				labels: { font: { size: 10 }, boxWidth: 12, padding: 16 },
 			},
-			tooltip: {
-				callbacks: {
-					label: (ctx: { dataset: { label: string }; raw: number }) =>
-						` ${ctx.dataset.label} : ${ctx.raw.toFixed(1)}%`,
-				},
-			},
 		},
 		scales: {
 			x: {
@@ -141,12 +135,6 @@ export default function Module5({ filters }: Module5Props) {
 		maintainAspectRatio: false,
 		plugins: {
 			legend: { display: false },
-			tooltip: {
-				callbacks: {
-					label: (ctx: { raw: AttractivitePoint }) =>
-						`${ctx.raw.dept} — Migratoire : ${ctx.raw.x.toFixed(2)}% | Construction : ${ctx.raw.y}`,
-				},
-			},
 		},
 		scales: {
 			x: {
@@ -204,12 +192,6 @@ export default function Module5({ filters }: Module5Props) {
 			legend: {
 				position: "top" as const,
 				labels: { font: { size: 10 }, boxWidth: 12, padding: 16 },
-			},
-			tooltip: {
-				callbacks: {
-					label: (ctx: { dataset: { label: string }; raw: number }) =>
-						` ${ctx.dataset.label} : ${ctx.raw.toFixed(1)}%`,
-				},
 			},
 		},
 		scales: {

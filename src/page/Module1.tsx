@@ -164,14 +164,6 @@ export default function Module1({ filters }: Module1Props) {
 				position: "top" as const,
 				labels: { font: { size: 10 }, boxWidth: 12, padding: 16 },
 			},
-			tooltip: {
-				callbacks: {
-					label: (ctx: {
-						dataset: { label: string };
-						raw: unknown;
-					}) => ` ${ctx.dataset.label} : ${ctx.raw} logements`,
-				},
-			},
 		},
 		scales: {
 			x: { grid: { display: false }, ticks: { font: { size: 10 } } },

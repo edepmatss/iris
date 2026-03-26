@@ -92,12 +92,6 @@ export default function Module4({ filters }: Module4Props) {
 				position: "top" as const,
 				labels: { font: { size: 10 }, boxWidth: 12, padding: 16 },
 			},
-			tooltip: {
-				callbacks: {
-					label: (ctx: { dataset: { label: string }; raw: number }) =>
-						` ${ctx.dataset.label} : ${ctx.raw.toFixed(1)} %`,
-				},
-			},
 		},
 		scales: {
 			x: { grid: { display: false }, ticks: { font: { size: 10 } } },
@@ -168,12 +162,6 @@ export default function Module4({ filters }: Module4Props) {
 		maintainAspectRatio: false,
 		plugins: {
 			legend: { display: false },
-			tooltip: {
-				callbacks: {
-					label: (ctx: { raw: number }) =>
-						` ${ctx.raw.toLocaleString("fr-FR")} ventes`,
-				},
-			},
 		},
 		scales: {
 			x: { grid: { display: false }, ticks: { font: { size: 10 } } },

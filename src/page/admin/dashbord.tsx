@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useState, useRef, type DragEvent, type ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import {
 	FilePlus2,
 	Upload,
@@ -18,17 +18,24 @@ const widgets = [
 ];
 
 export default function Dashboard() {
-	const [dragging, setDragging] = useState(false);
-	const [fileName, setFileName] = useState(null);
+	const [dragging, setDragging] = useState<boolean>(false);
+	const [fileName, setFileName] = useState<string | null>(null);
 	const progress = 67;
-	const inputRef = useRef(null);
+
+	// Typage strict de la référence vers l'input HTML
+	const inputRef = useRef<HTMLInputElement>(null);
+
 	const { user } = useAuth();
 	const navigate = useNavigate();
 
-	// si c'est pas connecter on retourne a l'accueil
-	if (!user) return navigate("/");
+	// si c'est pas connecté on retourne a l'accueil
+	if (!user) {
+		navigate("/");
+		return null;
+	}
 
-	const handleFile = (file) => {
+	// Typage strict du fichier
+	const handleFile = (file?: File) => {
 		if (file) setFileName(file.name);
 	};
 
@@ -54,17 +61,19 @@ export default function Dashboard() {
 						type="file"
 						accept=".csv"
 						style={{ display: "none" }}
-						onChange={(e) => handleFile(e.target.files?.[0])}
+						onChange={(e: ChangeEvent<HTMLInputElement>) =>
+							handleFile(e.target.files?.[0])
+						}
 					/>
 
 					{/* Drop zone */}
 					<div
-						onDragOver={(e) => {
+						onDragOver={(e: DragEvent<HTMLDivElement>) => {
 							e.preventDefault();
 							setDragging(true);
 						}}
 						onDragLeave={() => setDragging(false)}
-						onDrop={(e) => {
+						onDrop={(e: DragEvent<HTMLDivElement>) => {
 							e.preventDefault();
 							setDragging(false);
 							handleFile(e.dataTransfer.files?.[0]);

@@ -89,12 +89,6 @@ export default function Module2({ filters }: Module2Props) {
 		maintainAspectRatio: false,
 		plugins: {
 			legend: { display: false },
-			tooltip: {
-				callbacks: {
-					label: (ctx: { raw: ScatterPoint }) =>
-						`${ctx.raw.dept} — Pauvreté : ${ctx.raw.x}% | Social : ${ctx.raw.y}%`,
-				},
-			},
 		},
 		scales: {
 			x: {
@@ -139,12 +133,6 @@ export default function Module2({ filters }: Module2Props) {
 		maintainAspectRatio: false,
 		plugins: {
 			legend: { display: false },
-			tooltip: {
-				callbacks: {
-					label: (ctx: { raw: BubblePoint }) =>
-						`${ctx.raw.dept} — Chômage : ${ctx.raw.x}% | Loyer : ${ctx.raw.y} €/m²`,
-				},
-			},
 		},
 		scales: {
 			x: {

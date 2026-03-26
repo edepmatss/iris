@@ -139,12 +139,6 @@ export default function Module3({ filters }: Module3Props) {
 		maintainAspectRatio: false,
 		plugins: {
 			legend: { display: false },
-			tooltip: {
-				callbacks: {
-					label: (ctx: { raw: AgeEnergiePoint }) =>
-						`${ctx.raw.dept} — Âge : ${ctx.raw.x} ans | Énergivores : ${ctx.raw.y}%`,
-				},
-			},
 		},
 		scales: {
 			x: {
