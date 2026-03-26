@@ -18,6 +18,7 @@ import Module3 from "./page/Module3";
 import Module4 from "./page/Module4";
 import Module5 from "./page/Module5";
 import Login from "./page/Login.tsx";
+import Dashboard from "./page/dashbord.tsx";
 import PageHeader from "./components/PageHeader.tsx";
 import FiltersBar from "./components/FiltersBar.tsx";
 import Sidebar from "./components/Sidebar.tsx";
@@ -134,6 +135,7 @@ function AppContent() {
 							path="/module5"
 							element={<Module5 filters={filters} />}
 						/>
+						<Route path="/dashboard" element={<Dashboard />} />
 					</Route>
 
 					<Route
