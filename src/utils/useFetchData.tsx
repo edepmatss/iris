@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-// On définit les deux URLs
 const API_URL_LOCAL = "http://127.0.0.1:8000/api/stats";
 const API_URL_PROD = "https://iris-db.alwaysdata.net/api/stats";
 
@@ -8,13 +7,11 @@ export default function useFetchData(endpoint: string, query?: string) {
 	const [data, setData] = useState<any>(null);
 	const [loading, setLoading] = useState(true);
 
-	// Détection de l'environnement (Vite utilise import.meta.env.DEV)
 	const isLocal = import.meta.env.DEV;
 
 	useEffect(() => {
 		setLoading(true);
 
-		// On choisit la base en fonction de l'environnement
 		const base = isLocal ? API_URL_LOCAL : API_URL_PROD;
 		const url = query
 			? `${base}/${endpoint}?${query}`
