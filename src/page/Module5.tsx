@@ -11,6 +11,7 @@ import {
 import { Bar, Scatter } from "react-chartjs-2";
 import useFetchData from "../utils/useFetchData";
 import KpiCard from "../components/KpiCard";
+import ChartCard from "../components/ChartCard";
 
 ChartJS.register(
 	CategoryScale,
@@ -26,17 +27,25 @@ interface Module5Props {
 	filters: { annee: string; region: string; dept: string };
 }
 
-interface DynamiqueData {
-	dept: string;
-	naturel: number;
-	migratoire: number;
-	variation: number;
+// Stacked Bar : % moins de 20 ans vs % 60 ans et plus par département
+interface DemoRow {
+	nom_departement: string;
+	pct_moins_20: number; // %_population_de_moins_de_20_ans
+	pct_plus_60: number; // %_population_de_60_ans_et_plus
 }
 
-interface TypologyData {
-	nom: string;
-	individuels: number;
-	sociaux: number;
+// Scatter : solde migratoire vs construction neuve
+interface AttractivitePoint {
+	x: number; // solde_migratoire (%)
+	y: number; // construction neuve (logements mis en service)
+	dept: string;
+}
+
+// Grouped Bar : part individuel social vs part individuel parc général
+interface TypologieRow {
+	nom_region: string;
+	pct_individuel_social: number; // % logements individuels dans le parc social
+	pct_individuel_general: number; // % logements individuels dans le parc total
 }
 
 export default function Module5({ filters }: Module5Props) {
@@ -50,211 +59,207 @@ export default function Module5({ filters }: Module5Props) {
 
 	if (loading)
 		return (
-			<div className="p-10 text-center text-slate-400">
+			<div className="p-10 text-center text-stone-400">
 				Analyse des territoires en cours...
 			</div>
 		);
 
-	const dynamiques: DynamiqueData[] = data?.dynamiques || [];
-	const typology: TypologyData[] = data?.typology || [];
+	const kpis = data?.kpis || {};
 
-	const stackedBarData = {
-		labels: dynamiques.map((d: DynamiqueData) => d.dept),
+	// ── STACKED BAR : JEUNESSE VS SENIORS ──
+	const demoRaw: DemoRow[] = data?.demographie || [];
+
+	const demoStackedData = {
+		labels: demoRaw.map((d) => d.nom_departement),
 		datasets: [
 			{
-				label: "Solde naturel",
-				data: dynamiques.map((d: DynamiqueData) => d.naturel),
-				backgroundColor: "#10b981",
+				label: "< 20 ans (%)",
+				data: demoRaw.map((d) => d.pct_moins_20),
+				backgroundColor: "#0e7490",
+				borderRadius: { topLeft: 3, topRight: 3 },
+				stack: "demo",
 			},
 			{
-				label: "Solde migratoire",
-				data: dynamiques.map((d: DynamiqueData) => d.migratoire),
-				backgroundColor: "#6366f1",
-				borderRadius: { topLeft: 4, topRight: 4 },
+				label: "≥ 60 ans (%)",
+				data: demoRaw.map((d) => d.pct_plus_60),
+				backgroundColor: "#d97706",
+				stack: "demo",
 			},
 		],
 	};
 
-	const stackedBarOptions = {
+	const demoStackedOptions = {
 		responsive: true,
 		maintainAspectRatio: false,
 		plugins: {
 			legend: {
 				position: "top" as const,
-				labels: { font: { size: 11 }, color: "#94a3b8" },
+				labels: { font: { size: 10 }, boxWidth: 12, padding: 16 },
+			},
+			tooltip: {
+				callbacks: {
+					label: (ctx: { dataset: { label: string }; raw: number }) =>
+						` ${ctx.dataset.label} : ${ctx.raw.toFixed(1)}%`,
+				},
 			},
 		},
 		scales: {
 			x: {
 				stacked: true,
 				grid: { display: false },
-				ticks: { font: { size: 11 } },
+				ticks: { font: { size: 10 } },
 			},
 			y: {
 				stacked: true,
-				grid: {
-					color: "#334155",
-					borderDash: [3, 3],
+				border: { display: false },
+				grid: { color: "#f0f0f0", borderDash: [3, 3] },
+				ticks: {
+					font: { size: 10 },
+					callback: (v: number | string) => `${v}%`,
 				},
-				ticks: { font: { size: 11 } },
 			},
 		},
 	};
 
-	interface ScatterPoint {
-		x: number;
-		y: number;
-		dept: string;
-	}
+	// ── SCATTER : ATTRACTIVITÉ (SOLDE MIGRATOIRE VS CONSTRUCTION) ──
+	const attrRaw: AttractivitePoint[] = data?.attractivite || [];
 
-	const scatterData = {
+	const attrChartData = {
 		datasets: [
 			{
-				label: "Départements",
-				data: dynamiques.map(
-					(d: DynamiqueData): ScatterPoint => ({
-						x: d.migratoire,
-						y: d.variation,
-						dept: d.dept,
-					}),
-				),
-				backgroundColor: "rgba(168, 85, 247, 0.8)",
+				label: "Département",
+				data: attrRaw,
+				backgroundColor: "rgba(224, 92, 58, 0.6)",
 				pointRadius: 6,
-				pointHoverRadius: 8,
+				pointHoverRadius: 9,
 			},
 		],
 	};
 
-	const scatterOptions = {
+	const attrOptions = {
 		responsive: true,
 		maintainAspectRatio: false,
 		plugins: {
 			legend: { display: false },
+			tooltip: {
+				callbacks: {
+					label: (ctx: { raw: AttractivitePoint }) =>
+						`${ctx.raw.dept} — Migratoire : ${ctx.raw.x.toFixed(2)}% | Construction : ${ctx.raw.y}`,
+				},
+			},
 		},
 		scales: {
 			x: {
 				title: {
 					display: true,
-					text: "Migratoire (%)",
-					color: "#94a3b8",
+					text: "Solde migratoire (%)",
+					font: { size: 10 },
 				},
-				grid: {
-					color: "#334155",
-					borderDash: [3, 3],
-				},
-				ticks: { font: { size: 11 } },
+				grid: { color: "#f0f0f0", borderDash: [3, 3] },
+				ticks: { font: { size: 10 } },
 			},
 			y: {
 				title: {
 					display: true,
-					text: "Variation (%)",
-					color: "#94a3b8",
+					text: "Construction neuve (logements)",
+					font: { size: 10 },
 				},
-				grid: {
-					color: "#334155",
-					borderDash: [3, 3],
-				},
-				ticks: { font: { size: 11 } },
+				border: { display: false },
+				grid: { color: "#f0f0f0", borderDash: [3, 3] },
+				ticks: { font: { size: 10 } },
 			},
 		},
 	};
 
-	const typologyBarData = {
-		labels: typology.map((d: TypologyData) => d.nom),
+	// ── GROUPED BAR : TYPOLOGIES ──
+	// Part individuel dans le parc social vs parc général
+	const typoRaw: TypologieRow[] = data?.typologies || [];
+
+	const typoChartData = {
+		labels: typoRaw.map((d) => d.nom_region),
 		datasets: [
 			{
-				label: "Individuel",
-				data: typology.map((d: TypologyData) => d.individuels),
-				backgroundColor: "#f59e0b",
+				label: "Individuel — Parc social (%)",
+				data: typoRaw.map((d) => d.pct_individuel_social),
+				backgroundColor: "#d97706",
 				borderRadius: { topLeft: 4, topRight: 4 },
 				barPercentage: 0.8,
-				categoryPercentage: 0.7,
+				categoryPercentage: 0.65,
 			},
 			{
-				label: "Social",
-				data: typology.map((d: TypologyData) => d.sociaux),
-				backgroundColor: "#6366f1",
+				label: "Individuel — Parc général (%)",
+				data: typoRaw.map((d) => d.pct_individuel_general),
+				backgroundColor: "#0e7490",
 				borderRadius: { topLeft: 4, topRight: 4 },
 				barPercentage: 0.8,
-				categoryPercentage: 0.7,
+				categoryPercentage: 0.65,
 			},
 		],
 	};
 
-	const typologyBarOptions = {
+	const typoOptions = {
 		responsive: true,
 		maintainAspectRatio: false,
 		plugins: {
 			legend: {
 				position: "top" as const,
-				labels: { font: { size: 11 }, color: "#78716c" },
+				labels: { font: { size: 10 }, boxWidth: 12, padding: 16 },
+			},
+			tooltip: {
+				callbacks: {
+					label: (ctx: { dataset: { label: string }; raw: number }) =>
+						` ${ctx.dataset.label} : ${ctx.raw.toFixed(1)}%`,
+				},
 			},
 		},
 		scales: {
-			x: {
-				grid: { display: false },
-				ticks: { font: { size: 11 } },
-			},
+			x: { grid: { display: false }, ticks: { font: { size: 10 } } },
 			y: {
-				grid: {
-					color: "#334155",
-					borderDash: [3, 3],
+				border: { display: false },
+				grid: { color: "#f0f0f0", borderDash: [3, 3] },
+				ticks: {
+					font: { size: 10 },
+					callback: (v: number | string) => `${v}%`,
 				},
-				ticks: { font: { size: 11 } },
 			},
 		},
 	};
 
 	return (
 		<div className="space-y-8 animate-fade-in">
+			{/* ── KPIs ── */}
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<KpiCard
-					label="Variation démo. moy."
-					value={data?.kpis?.variationDemo?.value}
-					color="border-indigo-500"
+					label="< 20 ans (moy.)"
+					value={kpis.pctMoins20?.value}
+					color="border-cyan-700"
 				/>
 				<KpiCard
-					label="Solde migratoire moy."
-					value={data?.kpis?.soldeMigratoire?.value}
-					color="border-teal-400"
+					label="≥ 60 ans (moy.)"
+					value={kpis.pctPlus60?.value}
+					color="border-amber-500"
 				/>
 				<KpiCard
-					label="Maisons individuelles"
-					value={data?.kpis?.maisonsIndiv?.value}
-					color="border-amber-400"
+					label="Individuel dans le social"
+					value={kpis.pctIndividuelSocial?.value}
+					color="border-emerald-500"
 				/>
 			</div>
 
-			<div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-sm">
-				<h3 className="text-xs font-bold text-slate-300 uppercase mb-6">
-					Moteurs de croissance — Solde naturel vs migratoire
-				</h3>
-				<div className="h-[280px] w-full relative">
-					<Bar data={stackedBarData} options={stackedBarOptions} />
-				</div>
-			</div>
+			{/* ── STACKED BAR ── */}
+			<ChartCard title="Jeunesse vs Seniors — % moins de 20 ans vs 60 ans et plus (2023)">
+				<Bar data={demoStackedData} options={demoStackedOptions} />
+			</ChartCard>
 
+			{/* ── SCATTER ATTRACTIVITÉ + TYPOLOGIES ── */}
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-				<div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-sm">
-					<h3 className="text-xs font-bold text-slate-300 uppercase mb-6">
-						Attractivité vs variation globale
-					</h3>
-					<div className="h-[280px] w-full relative">
-						<Scatter data={scatterData} options={scatterOptions} />
-					</div>
-				</div>
+				<ChartCard title="Attractivité — Solde migratoire vs Construction neuve">
+					<Scatter data={attrChartData} options={attrOptions} />
+				</ChartCard>
 
-				<div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-sm">
-					<h3 className="text-xs font-bold text-slate-300 uppercase mb-6">
-						Typologies — Individuel vs Social
-					</h3>
-					<div className="h-[280px] w-full relative">
-						<Bar
-							data={typologyBarData}
-							options={typologyBarOptions}
-						/>
-					</div>
-				</div>
+				<ChartCard title="Typologies — Part individuel : parc social vs parc général">
+					<Bar data={typoChartData} options={typoOptions} />
+				</ChartCard>
 			</div>
 		</div>
 	);

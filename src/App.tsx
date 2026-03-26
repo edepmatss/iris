@@ -7,7 +7,7 @@ import {
 	useLocation,
 	useNavigate,
 } from "react-router-dom";
-import "./App.scss";
+import "./App.css";
 
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 

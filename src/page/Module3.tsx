@@ -2,48 +2,51 @@ import {
 	Chart as ChartJS,
 	CategoryScale,
 	LinearScale,
-	RadialLinearScale,
 	PointElement,
-	LineElement,
 	BarElement,
 	Title,
 	Tooltip,
 	Legend,
-	Filler,
 } from "chart.js";
-import { Bar, Radar } from "react-chartjs-2";
+import { Bar, Scatter } from "react-chartjs-2";
 import useFetchData from "../utils/useFetchData";
-
 import KpiCard from "../components/KpiCard";
 import ChartCard from "../components/ChartCard";
 
 ChartJS.register(
 	CategoryScale,
 	LinearScale,
-	RadialLinearScale,
 	PointElement,
-	LineElement,
 	BarElement,
 	Title,
 	Tooltip,
 	Legend,
-	Filler,
 );
 
 interface Module3Props {
 	filters: { annee: string; region: string; dept: string };
 }
 
-// Interfaces pour typer les données
-interface VacanceDataPoint {
-	name: string;
-	val: number;
+// Horizontal Bar : part énergivores par région
+interface EnergieRow {
+	nom_region: string;
+	// parc_social_taux_de_logements_énergivores_e_f_g_en (en %)
+	taux_energivores: number;
 }
 
-interface RadarDataPoint {
-	s: string;
-	A: number;
-	B: number;
+// Scatter : âge moyen vs taux énergivores
+interface AgeEnergiePoint {
+	x: number; // parc_social_âge_moyen_du_parc_en_années
+	y: number; // parc_social_taux_de_logements_énergivores_e_f_g_en
+	dept: string;
+}
+
+// Bar renouvellement : démolitions / parc total
+interface RenouvellementRow {
+	nom_region: string;
+	logements_demolis: number; // parc_social_logements_démolis
+	parc_total: number;
+	taux_renouvellement: number; // (démolis / total) * 100
 }
 
 export default function Module3({ filters }: Module3Props) {
@@ -57,114 +60,163 @@ export default function Module3({ filters }: Module3Props) {
 
 	if (loading)
 		return (
-			<div className="p-10 text-center text-slate-400 font-medium">
-				Analyse de la vacance du parc...
+			<div className="p-10 text-center text-stone-400 font-medium">
+				Analyse de la rénovation énergétique...
 			</div>
 		);
 
 	const kpis = data?.kpis || {};
-	const vacanceData: VacanceDataPoint[] = data?.distribution || [];
-	const radarRawData: RadarDataPoint[] = data?.radar || [
-		{ s: "Maisons", A: 80, B: 28 },
-		{ s: "Log. Sociaux", A: 10, B: 22 },
-		{ s: "Vacants", A: 13, B: 6 },
-		{ s: "Secondaires", A: 10, B: 4 },
-		{ s: "Locatif priv.", A: 25, B: 45 },
-	];
 
-	// 1. FORMATAGE DES DONNÉES : On multiplie par 100 pour avoir de vrais pourcentages
-	const formattedVacanceData = vacanceData.map((d: VacanceDataPoint) => ({
-		name: d.name,
-		val: Number((d.val * 100).toFixed(2)), // On garde 2 décimales maximum
-	}));
+	// ── HORIZONTAL BAR : ÉNERGIVORES PAR RÉGION ──
+	const energieRaw: EnergieRow[] = data?.energivoresParRegion || [];
 
-	// 2. COULEURS : On se base sur les nouvelles valeurs formatées
-	const barColors = formattedVacanceData.map((d: VacanceDataPoint) =>
-		d.val > 12 ? "#a855f7" : d.val > 9 ? "#f59e0b" : "#10b981",
+	// Trier du plus énergivore au moins pour une lecture immédiate
+	const energieSorted = [...energieRaw].sort(
+		(a, b) => b.taux_energivores - a.taux_energivores,
 	);
 
-	// --- CONFIGURATION CHART.JS ---
+	// Couleur conditionnelle : rouge si > 35 %, orange si > 25 %
+	const barColors = energieSorted.map((d) =>
+		d.taux_energivores > 35
+			? "#e05c3a"
+			: d.taux_energivores > 25
+				? "#d97706"
+				: "#059669",
+	);
 
-	const barChartData = {
-		labels: formattedVacanceData.map((d: VacanceDataPoint) => d.name),
+	const energieChartData = {
+		labels: energieSorted.map((d) => d.nom_region),
 		datasets: [
 			{
-				label: "Vacance",
-				data: formattedVacanceData.map((d: VacanceDataPoint) => d.val),
+				label: "Logements énergivores E/F/G (%)",
+				data: energieSorted.map((d) => d.taux_energivores),
 				backgroundColor: barColors,
-				borderRadius: { topRight: 6, bottomRight: 6 },
-				barThickness: 16,
+				borderRadius: { topRight: 4, bottomRight: 4 },
+				barThickness: 18,
 			},
 		],
 	};
 
-	const barOptions = {
+	const energieOptions = {
 		indexAxis: "y" as const,
+		responsive: true,
+		maintainAspectRatio: false,
+		plugins: { legend: { display: false } },
+		scales: {
+			x: {
+				display: true,
+				grid: { color: "#f0f0f0", borderDash: [3, 3] },
+				ticks: {
+					font: { size: 10 },
+					callback: (v: number | string) => `${v}%`,
+				},
+			},
+			y: {
+				border: { display: false },
+				grid: { display: false },
+				ticks: { font: { size: 10 } },
+			},
+		},
+	};
+
+	// ── SCATTER : ÂGE MOYEN VS TAUX ÉNERGIVORES ──
+	const ageEnergieRaw: AgeEnergiePoint[] = data?.ageEnergie || [];
+
+	const ageEnergieChartData = {
+		datasets: [
+			{
+				label: "Département",
+				data: ageEnergieRaw,
+				backgroundColor: "rgba(217, 119, 6, 0.55)",
+				pointRadius: 6,
+				pointHoverRadius: 9,
+			},
+		],
+	};
+
+	const ageEnergieOptions = {
 		responsive: true,
 		maintainAspectRatio: false,
 		plugins: {
 			legend: { display: false },
+			tooltip: {
+				callbacks: {
+					label: (ctx: { raw: AgeEnergiePoint }) =>
+						`${ctx.raw.dept} — Âge : ${ctx.raw.x} ans | Énergivores : ${ctx.raw.y}%`,
+				},
+			},
 		},
 		scales: {
 			x: {
-				grid: {
-					color: "#334155",
-					borderDash: [3, 3],
+				title: {
+					display: true,
+					text: "Âge moyen du parc (années)",
+					font: { size: 10 },
 				},
-				ticks: {
-					font: { size: 11 },
-					callback: (value: number | string) => `${value}%`,
-				},
+				grid: { color: "#f0f0f0", borderDash: [3, 3] },
+				ticks: { font: { size: 10 } },
 			},
 			y: {
-				grid: { display: false },
-				ticks: { font: { size: 11 } },
+				title: {
+					display: true,
+					text: "Logements énergivores E/F/G (%)",
+					font: { size: 10 },
+				},
 				border: { display: false },
+				grid: { color: "#f0f0f0", borderDash: [3, 3] },
+				ticks: {
+					font: { size: 10 },
+					callback: (v: number | string) => `${v}%`,
+				},
 			},
 		},
 	};
 
-	const radarChartData = {
-		labels: radarRawData.map((d: RadarDataPoint) => d.s),
+	// ── BAR : INDICATEUR DE RENOUVELLEMENT (DÉMOLITIONS / PARC TOTAL) ──
+	const renouvRaw: RenouvellementRow[] = data?.renouvellement || [];
+
+	const renouvChartData = {
+		labels: renouvRaw.map((d) => d.nom_region),
 		datasets: [
 			{
-				label: "Rural",
-				data: radarRawData.map((d: RadarDataPoint) => d.A),
-				backgroundColor: "rgba(16, 185, 129, 0.2)",
-				borderColor: "#10b981",
-				pointBackgroundColor: "#10b981",
-				fill: true,
-			},
-			{
-				label: "Urbain",
-				data: radarRawData.map((d: RadarDataPoint) => d.B),
-				backgroundColor: "rgba(99, 102, 241, 0.2)",
-				borderColor: "#6366f1",
-				pointBackgroundColor: "#6366f1",
-				fill: true,
+				label: "Taux de renouvellement (%)",
+				data: renouvRaw.map((d) => d.taux_renouvellement),
+				backgroundColor: "#059669",
+				borderRadius: { topLeft: 4, topRight: 4 },
+				barThickness: 26,
 			},
 		],
 	};
 
-	const radarOptions = {
+	const renouvOptions = {
 		responsive: true,
 		maintainAspectRatio: false,
 		plugins: {
-			legend: {
-				position: "bottom" as const,
-				labels: { font: { size: 11 }, color: "#94a3b8" },
+			legend: { display: false },
+			tooltip: {
+				callbacks: {
+					label: (ctx: { dataIndex: number }) => {
+						const row = renouvRaw[ctx.dataIndex];
+						return [
+							` Taux : ${row.taux_renouvellement.toFixed(2)}%`,
+							` Démolis : ${row.logements_demolis.toLocaleString("fr-FR")}`,
+							` Parc total : ${row.parc_total.toLocaleString("fr-FR")}`,
+						];
+					},
+				},
 			},
 		},
 		scales: {
-			r: {
-				angleLines: { color: "#334155" },
-				grid: { color: "#334155" },
-				pointLabels: {
-					font: { size: 11 },
-					color: "#94a3b8",
-				},
+			x: {
+				grid: { display: false },
+				ticks: { font: { size: 10 } },
+			},
+			y: {
+				border: { display: false },
+				grid: { color: "#f0f0f0", borderDash: [3, 3] },
 				ticks: {
-					display: false,
+					font: { size: 10 },
+					callback: (v: number | string) => `${v}%`,
 				},
 			},
 		},
@@ -172,33 +224,43 @@ export default function Module3({ filters }: Module3Props) {
 
 	return (
 		<div className="animate-fade-in space-y-8">
+			{/* ── KPIs ── */}
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<KpiCard
-					label="Taux vacance moyen"
-					value={kpis.tauxVacance?.value}
-					color="border-amber-400"
+					label="Logts énergivores (E/F/G)"
+					value={kpis.tauxEnergivores?.value}
+					color="border-amber-500"
 				/>
 				<KpiCard
-					label="Résidences principales"
-					value={kpis.residencesPrincipales?.value}
-					color="border-teal-400"
+					label="Âge moyen du parc"
+					value={kpis.ageMoyen?.value}
+					color="border-cyan-600"
 				/>
 				<KpiCard
-					label="Résidences secondaires"
-					value={kpis.residencesSecondaires?.value}
-					color="border-indigo-500"
+					label="Logements démolis 2023"
+					value={kpis.logementsDemolis?.value}
+					color="border-rose-500"
 				/>
 			</div>
 
+			{/* ── HORIZONTAL BAR + SCATTER ── */}
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-				<ChartCard title="Taux de vacance par département (%)">
-					<Bar data={barChartData} options={barOptions} />
+				<ChartCard title="Part des logements énergivores (E/F/G) par région (%)">
+					<Bar data={energieChartData} options={energieOptions} />
 				</ChartCard>
 
-				<ChartCard title="Rural vs Urbain — Radar typologique">
-					<Radar data={radarChartData} options={radarOptions} />
+				<ChartCard title="Âge moyen du parc vs Taux de logements énergivores">
+					<Scatter
+						data={ageEnergieChartData}
+						options={ageEnergieOptions}
+					/>
 				</ChartCard>
 			</div>
+
+			{/* ── RENOUVELLEMENT ── */}
+			<ChartCard title="Indicateur de renouvellement — Logements démolis 2023 / Parc total (%)">
+				<Bar data={renouvChartData} options={renouvOptions} />
+			</ChartCard>
 		</div>
 	);
 }
