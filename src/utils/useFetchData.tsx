@@ -8,8 +8,9 @@ export default function useFetchData(endpoint: string, query?: string) {
 	const [data, setData] = useState<any>(null);
 	const [loading, setLoading] = useState(true);
 
-	// Détection de l'environnement (Vite utilise import.meta.env.DEV)
+	// détection de l'environnement (Vite utilise import.meta.env.DEV)
 	const isLocal = import.meta.env.DEV;
+	//const isLocal = false;
 
 	useEffect(() => {
 		setLoading(true);
