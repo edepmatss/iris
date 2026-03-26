@@ -21,7 +21,7 @@ import Login from "./page/Login.tsx";
 import PageHeader from "./components/PageHeader.tsx";
 import FiltersBar from "./components/FiltersBar.tsx";
 import Sidebar from "./components/Sidebar.tsx";
-import Admin from "./page/admin/dashbord.tsx";
+import Dashbord from "./page/admin/dashbord.tsx";
 
 const TITLES: Record<string, string> = {
 	module1: "Vue Nationale",
@@ -135,7 +135,7 @@ function AppContent() {
 							path="/module5"
 							element={<Module5 filters={filters} />}
 						/>
-						<Route path="/admin" element={<Admin />} />
+						<Route path="/admin" element={<Dashbord />} />
 					</Route>
 
 					<Route
