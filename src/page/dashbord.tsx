@@ -19,7 +19,7 @@ export default function Dashboard() {
 	const [dragging, setDragging] = useState(false);
 	const [fileName, setFileName] = useState(null);
 	const progress = 67;
-	const inputRef = useRef(null);
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	const handleFile = (file: any) => {
 		if (file) setFileName(file.name);
