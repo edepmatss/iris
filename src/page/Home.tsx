@@ -103,11 +103,10 @@ export default function Home({ onNavigate }: HomeProps) {
 						</h1>
 					</div>
 				</div>
-				<p className="text-[17px] text-slate-500 max-w-[580px] leading-[1.7]">
-					Analyse territoriale et démographique du parc immobilier
-					français. Données INSEE — départements, régions, logements,
-					économie.
+				<p className="font-bold text-xl">
+					Le Logement Social sous la Loupe : État des Lieux et Défis Territoriaux (2021-2023)
 				</p>
+				<p className="text-[17px] text-slate-500 max-w-[580px] leading-[1.7]">Explorez les données clés pour comprendre comment le parc social français s'adapte aux crises économiques, au vieillissement de la population et à l'urgence écologique.</p>
 
 				<div className="flex gap-8 mt-9 flex-wrap animate-fade-up-d1">
 					{statsToShow.map((s: any, i: number) => (
