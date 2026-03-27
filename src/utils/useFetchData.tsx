@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
 
-const API_URL_LOCAL = "http://127.0.0.1:8000/api/stats";
-const API_URL_PROD = "https://iris-db.alwaysdata.net/api/stats";
+const API_URL = "https://iris-db.alwaysdata.net/api/stats";
 
 export default function useFetchData(endpoint: string, query?: string) {
 	const [data, setData] = useState<any>(null);
 	const [loading, setLoading] = useState(true);
 
-	const isLocal = import.meta.env.DEV;
-
 	useEffect(() => {
 		setLoading(true);
 
-		const base = isLocal ? API_URL_LOCAL : API_URL_PROD;
 		const url = query
-			? `${base}/${endpoint}?${query}`
-			: `${base}/${endpoint}`;
+			? `${API_URL}/${endpoint}?${query}`
+			: `${API_URL}/${endpoint}`;
 
 		fetch(url, { headers: { Accept: "application/json" } })
 			.then((res) => {
@@ -30,7 +26,8 @@ export default function useFetchData(endpoint: string, query?: string) {
 				console.error("Erreur API IRIS:", err);
 				setLoading(false);
 			});
-	}, [endpoint, query, isLocal]);
+
+	}, [endpoint, query]);
 
 	return { data, loading };
 }
