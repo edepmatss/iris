@@ -26,15 +26,12 @@ interface Departement {
 	code_departement?: string;
 }
 
-const API_BASE = import.meta.env.DEV
-	? "http://127.0.0.1:8000/api"
-	: "https://iris-db.alwaysdata.net/api";
+const API_BASE = "https://iris-db.alwaysdata.net/api";
 
 export default function FiltersBar({ filters, setFilters }: FiltersBarProps) {
 	const [regions, setRegions] = useState<Region[]>([]);
 	const [departements, setDepartements] = useState<Departement[]>([]);
 
-	// 1. Fetch des régions au chargement
 	useEffect(() => {
 		fetch(`${API_BASE}/regions`, {
 			headers: { Accept: "application/json" },
