@@ -42,16 +42,16 @@ const modules = [
 		hoverStyle:
 			"hover:border-pink-200 hover:shadow-[0_8px_32px_rgba(236,72,153,0.15)]",
 	},
-	{
-		id: "module3",
-		icon: Building2,
-		title: "Urgence Énergétique",
-		desc: "Passoires thermiques ou bâtiments basse consommation ? Analysez la performance écologique du parc social actuel.",
-		lightBg: "bg-amber-50",
-		iconColor: "text-amber-600",
-		hoverStyle:
-			"hover:border-amber-200 hover:shadow-[0_8px_32px_rgba(245,158,11,0.15)]",
-	},
+	// {
+	// 	id: "module3",
+	// 	icon: Building2,
+	// 	title: "Urgence Énergétique",
+	// 	desc: "Passoires thermiques ou bâtiments basse consommation ? Analysez la performance écologique du parc social actuel.",
+	// 	lightBg: "bg-amber-50",
+	// 	iconColor: "text-amber-600",
+	// 	hoverStyle:
+	// 		"hover:border-amber-200 hover:shadow-[0_8px_32px_rgba(245,158,11,0.15)]",
+	// },
 	{
 		id: "module4",
 		icon: TrendingUp,

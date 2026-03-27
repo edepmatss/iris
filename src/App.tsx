@@ -14,7 +14,7 @@ import { AuthProvider } from "./contexts/AuthContext.tsx";
 import Home from "./page/Home.tsx";
 import Module1 from "./page/Module1";
 import Module2 from "./page/Module2";
-import Module3 from "./page/Module3";
+// import Module3 from "./page/Module3";
 import Module4 from "./page/Module4";
 import Module5 from "./page/Module5";
 import Login from "./page/Login.tsx";
@@ -26,7 +26,7 @@ import Dashbord from "./page/admin/dashbord.tsx";
 const TITLES: Record<string, string> = {
 	module1: "L'Offre et la Tension",
 	module2: "Précarité et Solidarité",
-	module3: "Urgence Énergétique",
+	// module3: "Urgence Énergétique",
 	module4: "Mobilité et Vacance",
 	module5: "Demain, quel Habitat ?",
 };
@@ -123,10 +123,10 @@ function AppContent() {
 							path="/module2"
 							element={<Module2 filters={filters} />}
 						/>
-						<Route
+						{/* <Route
 							path="/module3"
 							element={<Module3 filters={filters} />}
-						/>
+						/> */}
 						<Route
 							path="/module4"
 							element={<Module4 filters={filters} />}
