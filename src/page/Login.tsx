@@ -28,27 +28,27 @@ export default function Login() {
 	};
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-slate-900 p-4 animate-fade-in">
-			<div className="bg-slate-800 border border-slate-700 rounded-2xl p-8 shadow-sm w-full max-w-md">
+		<div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 animate-fade-in">
+			<div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm w-full max-w-md">
 				<div className="text-center mb-8">
-					<div className="bg-indigo-600 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+					<div className="bg-cyan-900 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
 						<Lock className="text-white" size={24} />
 					</div>
-					<h1 className="text-2xl font-black text-slate-50 font-['Syne']">
+					<h1 className="text-2xl font-black text-slate-900 font-['Syne']">
 						Connexion Admin
 					</h1>
-					<p className="text-xs text-slate-400 mt-2 uppercase tracking-wider font-bold">
+					<p className="text-xs text-slate-500 mt-2 uppercase tracking-wider font-bold">
 						Plateforme d'analyse IRIS
 					</p>
 				</div>
 
 				{error && (
-					<div className="mb-6 p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl flex items-start gap-3 animate-fade-in">
+					<div className="mb-6 p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-3 animate-fade-in">
 						<AlertCircle
 							className="text-rose-500 mt-0.5 shrink-0"
 							size={16}
 						/>
-						<p className="text-sm text-rose-400 font-medium">
+						<p className="text-sm text-rose-600 font-medium">
 							{error}
 						</p>
 					</div>
@@ -56,19 +56,19 @@ export default function Login() {
 
 				<form onSubmit={handleLogin} className="space-y-5">
 					<div className="space-y-1.5">
-						<label className="text-[10px] font-bold text-slate-400 uppercase ml-1 tracking-wider">
+						<label className="text-[10px] font-bold text-slate-500 uppercase ml-1 tracking-wider">
 							Identifiant
 						</label>
 						<div className="relative">
 							<User
-								className="absolute left-3 top-3 text-slate-500"
+								className="absolute left-3 top-3 text-slate-400"
 								size={16}
 							/>
 							<input
 								type="text"
 								value={username}
 								onChange={(e) => setUsername(e.target.value)}
-								className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-300 outline-none focus:border-indigo-500/50 transition-all"
+								className="w-full bg-white border border-slate-300 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-900 outline-none focus:border-cyan-500/50 transition-all shadow-sm"
 								placeholder="Saisissez votre identifiant"
 								required
 							/>
@@ -76,19 +76,19 @@ export default function Login() {
 					</div>
 
 					<div className="space-y-1.5">
-						<label className="text-[10px] font-bold text-slate-400 uppercase ml-1 tracking-wider">
+						<label className="text-[10px] font-bold text-slate-500 uppercase ml-1 tracking-wider">
 							Mot de passe
 						</label>
 						<div className="relative">
 							<Lock
-								className="absolute left-3 top-3 text-slate-500"
+								className="absolute left-3 top-3 text-slate-400"
 								size={16}
 							/>
 							<input
 								type="password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
-								className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-300 outline-none focus:border-indigo-500/50 transition-all"
+								className="w-full bg-white border border-slate-300 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-900 outline-none focus:border-cyan-500/50 transition-all shadow-sm"
 								placeholder="••••••••"
 								required
 							/>
@@ -98,7 +98,7 @@ export default function Login() {
 					<button
 						type="submit"
 						disabled={isLoading}
-						className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white border border-indigo-700 px-5 py-3 rounded-xl text-sm font-bold hover:bg-indigo-700 transition-all mt-2 disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98]"
+						className="w-full flex items-center justify-center gap-2 bg-cyan-700 text-white border border-cyan-800 px-5 py-3 rounded-xl text-sm font-bold hover:bg-cyan-800 transition-all mt-2 disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98]"
 					>
 						{isLoading ? (
 							<span className="animate-pulse">Connexion...</span>

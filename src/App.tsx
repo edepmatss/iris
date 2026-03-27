@@ -76,7 +76,7 @@ function AppContent() {
 		location.pathname === "/" ? "home" : location.pathname.substring(1);
 
 	return (
-		<div className="flex min-h-screen bg-slate-900">
+		<div className="flex min-h-screen bg-slate-50">
 			{!isLoginPage && (
 				<Sidebar
 					page={page}
@@ -141,7 +141,7 @@ function AppContent() {
 					<Route
 						path="*"
 						element={
-							<div className="p-10 text-slate-400">
+							<div className="p-10 text-slate-500">
 								Page introuvable...
 							</div>
 						}

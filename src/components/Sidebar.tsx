@@ -40,17 +40,17 @@ export default function Sidebar({
 
 	return (
 		<aside
-			className={`fixed top-0 left-0 bottom-0 z-[200] flex flex-col bg-slate-900 border-r border-slate-700 shrink-0 transition-[width] duration-200 ease-in-out ${
+			className={`fixed top-0 left-0 bottom-0 z-[200] flex flex-col bg-white border-r border-slate-200 shrink-0 transition-[width] duration-200 ease-in-out ${
 				sidebarOpen ? "w-[230px]" : "w-[64px]"
 			}`}
 		>
 			<div
-				className={`border-b border-slate-700 ${
+				className={`border-b border-slate-200 ${
 					sidebarOpen ? "pt-7 px-5 pb-5" : "pt-7 px-3.5 pb-5"
 				}`}
 			>
 				<div className="flex items-center gap-2.5">
-					<div className="flex items-center justify-center shrink-0 w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-500 shadow-md shadow-indigo-600/20">
+					<div className="flex items-center justify-center shrink-0 w-9 h-9 rounded-xl bg-cyan-900 shadow-md">
 						<BarChart3
 							className="w-[18px] h-[18px] text-white"
 							strokeWidth={2.5}
@@ -59,10 +59,10 @@ export default function Sidebar({
 
 					{sidebarOpen && (
 						<div>
-							<p className="font-['Syne',sans-serif] font-extrabold text-lg text-slate-50 tracking-tight leading-none">
+							<p className="font-['Syne',sans-serif] font-extrabold text-lg text-slate-900 tracking-tight leading-none">
 								IRIS
 							</p>
-							<p className="text-[9px] text-slate-400 tracking-widest uppercase mt-0.5">
+							<p className="text-[9px] text-slate-500 tracking-widest uppercase mt-0.5">
 								Analyse Immo
 							</p>
 						</div>
@@ -86,8 +86,8 @@ export default function Sidebar({
 									: "gap-0 justify-center p-2.5"
 							} ${
 								isActive
-									? "bg-indigo-500/10 text-indigo-400 font-bold border-indigo-500/30"
-									: "bg-transparent text-slate-400 font-medium border-transparent hover:bg-slate-800"
+									? "bg-sky-50 text-sky-800 font-bold border-sky-100"
+									: "bg-transparent text-slate-500 font-medium border-transparent hover:bg-slate-50"
 							}`}
 						>
 							<span className="shrink-0 flex items-center justify-center w-[18px] h-[18px]">
@@ -99,7 +99,7 @@ export default function Sidebar({
 
 							{sidebarOpen && <span>{item.label}</span>}
 							{sidebarOpen && isActive && (
-								<div className="ml-auto w-1 h-4 rounded-full bg-indigo-500" />
+								<div className="ml-auto w-1 h-4 rounded-full bg-cyan-600" />
 							)}
 						</button>
 					);
@@ -117,8 +117,8 @@ export default function Sidebar({
 								: "gap-0 justify-center p-2.5"
 						} ${
 							page === "admin"
-								? "bg-indigo-500/10 text-indigo-400 font-bold border-indigo-500/30"
-								: "bg-transparent text-slate-400 font-medium border-transparent hover:bg-slate-800"
+								? "bg-sky-50 text-sky-800 font-bold border-sky-100"
+								: "bg-transparent text-slate-500 font-medium border-transparent hover:bg-slate-50"
 						}`}
 					>
 						<span className="shrink-0 flex items-center justify-center w-[18px] h-[18px]">
@@ -129,18 +129,18 @@ export default function Sidebar({
 						</span>
 						{sidebarOpen && <span>Admin</span>}
 						{sidebarOpen && page === "admin" && (
-							<div className="ml-auto w-1 h-4 rounded-full bg-indigo-500" />
+							<div className="ml-auto w-1 h-4 rounded-full bg-cyan-600" />
 						)}
 					</button>
 				)}
 			</nav>
 
-			<div className="px-2.5 py-3 border-t border-slate-700">
+			<div className="px-2.5 py-3 border-t border-slate-200">
 				{user ? (
 					<button
 						onClick={logout}
 						title={!sidebarOpen ? "Déconnexion" : ""}
-						className={`w-full flex items-center rounded-lg mb-3 transition-all duration-150 text-[13px] border border-transparent bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 hover:text-rose-300 hover:border-rose-500/30 ${
+						className={`w-full flex items-center rounded-lg mb-3 transition-all duration-150 text-[13px] border border-transparent bg-rose-50 text-rose-600 hover:bg-rose-100 hover:border-rose-200 ${
 							sidebarOpen
 								? "gap-2.5 justify-start px-3 py-2"
 								: "gap-0 justify-center p-2.5"
@@ -159,7 +159,7 @@ export default function Sidebar({
 					<button
 						onClick={() => setPage("login")}
 						title={!sidebarOpen ? "Connexion" : ""}
-						className={`w-full flex items-center rounded-lg mb-3 transition-all duration-150 text-[13px] border border-transparent bg-slate-800 text-slate-300 hover:bg-indigo-500/10 hover:text-indigo-400 hover:border-indigo-500/30 ${
+						className={`w-full flex items-center rounded-lg mb-3 transition-all duration-150 text-[13px] border border-transparent bg-slate-100 text-slate-600 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-200 ${
 							sidebarOpen
 								? "gap-2.5 justify-start px-3 py-2"
 								: "gap-0 justify-center p-2.5"
@@ -176,7 +176,7 @@ export default function Sidebar({
 
 				<button
 					onClick={() => setSidebarOpen((s) => !s)}
-					className={`w-full px-3 py-2 rounded-lg text-slate-400 text-xs flex items-center gap-1.5 hover:bg-slate-800 transition-colors ${
+					className={`w-full px-3 py-2 rounded-lg text-slate-500 text-xs flex items-center gap-1.5 hover:bg-slate-50 transition-colors ${
 						sidebarOpen ? "justify-between" : "justify-center"
 					}`}
 				>

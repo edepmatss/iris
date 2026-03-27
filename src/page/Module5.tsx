@@ -59,7 +59,7 @@ export default function Module5({ filters }: Module5Props) {
 
 	if (loading)
 		return (
-			<div className="p-10 text-center text-stone-400">
+			<div className="p-10 text-center text-slate-500">
 				Analyse des territoires en cours...
 			</div>
 		);

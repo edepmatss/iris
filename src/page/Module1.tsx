@@ -60,7 +60,7 @@ export default function Module1({ filters }: Module1Props) {
 
 	if (loading)
 		return (
-			<div className="p-10 text-center text-stone-400 font-medium">
+			<div className="p-10 text-center text-slate-500 font-medium">
 				Analyse des données IRIS...
 			</div>
 		);
@@ -226,12 +226,12 @@ export default function Module1({ filters }: Module1Props) {
 				<KpiCard
 					label="Log. Sociaux"
 					value={kpis.logementsSociaux?.value}
-					color="border-indigo-500"
+					color="border-orange-500"
 				/>
 				<KpiCard
 					label="Taux Chômage"
 					value={kpis.chomage?.value}
-					color="border-rose-500"
+					color="border-pink-500"
 				/>
 				<KpiCard
 					label="Logts Vacants"
@@ -241,17 +241,17 @@ export default function Module1({ filters }: Module1Props) {
 				<KpiCard
 					label="Loyer Social"
 					value={kpis.loyer?.value}
-					color="border-teal-400"
+					color="border-emerald-500"
 				/>
 				<KpiCard
 					label="Parc Total"
 					value={kpis.parcTotal?.value}
-					color="border-slate-600"
+					color="border-slate-800"
 				/>
 				<KpiCard
 					label="Population"
 					value={kpis.population?.value}
-					color="border-fuchsia-500"
+					color="border-purple-500"
 				/>
 			</div>
 

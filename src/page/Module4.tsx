@@ -52,7 +52,7 @@ export default function Module4({ filters }: Module4Props) {
 
 	if (loading)
 		return (
-			<div className="p-10 text-center text-stone-400">
+			<div className="p-10 text-center text-slate-500">
 				Calcul des dynamiques en cours...
 			</div>
 		);
@@ -191,7 +191,7 @@ export default function Module4({ filters }: Module4Props) {
 				<KpiCard
 					label="Écart vacance 21→23"
 					value={kpis.ecartVacance?.value}
-					color="border-rose-500"
+					color="border-pink-500"
 					trend={kpis.ecartVacance?.raw > 0 ? "up" : "down"}
 				/>
 			</div>
@@ -220,7 +220,7 @@ export default function Module4({ filters }: Module4Props) {
 							<span className="text-xl font-bold font-['JetBrains_Mono'] text-slate-800">
 								{tauxFluidite.toFixed(1)}%
 							</span>
-							<span className="text-[9px] text-stone-400 uppercase">
+							<span className="text-[9px] text-slate-500 uppercase">
 								Fluidité
 							</span>
 						</div>
@@ -238,7 +238,7 @@ export default function Module4({ filters }: Module4Props) {
 							<span className="text-xl font-bold font-['JetBrains_Mono'] text-slate-800">
 								{partSociale.toFixed(1)}%
 							</span>
-							<span className="text-[9px] text-stone-400 uppercase">
+							<span className="text-[9px] text-slate-500 uppercase">
 								Social
 							</span>
 						</div>

@@ -60,7 +60,7 @@ export default function Module3({ filters }: Module3Props) {
 
 	if (loading)
 		return (
-			<div className="p-10 text-center text-stone-400 font-medium">
+			<div className="p-10 text-center text-slate-500 font-medium">
 				Analyse de la rénovation énergétique...
 			</div>
 		);
@@ -233,7 +233,7 @@ export default function Module3({ filters }: Module3Props) {
 				<KpiCard
 					label="Logements démolis 2023"
 					value={kpis.logementsDemolis?.value}
-					color="border-rose-500"
+					color="border-pink-500"
 				/>
 			</div>
 

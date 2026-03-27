@@ -62,7 +62,7 @@ export default function Module2({ filters }: Module2Props) {
 
 	if (loading)
 		return (
-			<div className="p-10 text-center text-stone-400 font-medium">
+			<div className="p-10 text-center text-slate-500 font-medium">
 				Chargement du Module Social...
 			</div>
 		);
@@ -232,7 +232,7 @@ export default function Module2({ filters }: Module2Props) {
 				<KpiCard
 					label="Chômage moyen"
 					value={kpis.chomage?.value}
-					color="border-rose-500"
+					color="border-pink-500"
 				/>
 				<KpiCard
 					label="Pauvreté moyenne"

@@ -11,17 +11,17 @@ export default function PageHeader({ title, onBack }: PageHeaderProps) {
 			<div className="flex items-center gap-2.5 mb-1">
 				<button
 					onClick={onBack}
-					className="text-[12px] text-slate-400 hover:text-indigo-400 transition-colors flex items-center gap-1 py-1 px-2 -ml-2 rounded-md hover:bg-slate-800"
+					className="text-[12px] text-slate-500 hover:text-cyan-700 transition-colors flex items-center gap-1 py-1 px-2 -ml-2 rounded-md hover:bg-slate-50"
 				>
 					<ChevronLeft size={14} />
 					Accueil
 				</button>
-				<span className="text-slate-600 text-[12px]">/</span>
-				<span className="text-[12px] text-indigo-400 font-semibold tracking-wide">
+				<span className="text-slate-300 text-[12px]">/</span>
+				<span className="text-[12px] text-cyan-700 font-semibold tracking-wide">
 					{title}
 				</span>
 			</div>
-			<h1 className="font-['Syne',sans-serif] font-extrabold text-[28px] text-slate-50 tracking-tight leading-tight">
+			<h1 className="font-['Syne',sans-serif] font-extrabold text-[28px] text-slate-900 tracking-tight leading-tight">
 				{title}
 			</h1>
 		</div>
