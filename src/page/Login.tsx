@@ -34,11 +34,11 @@ export default function Login() {
 					<div className="bg-cyan-900 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
 						<Lock className="text-white" size={24} />
 					</div>
-					<h1 className="text-2xl font-black text-slate-900 font-['Syne']">
+					<h1 className="text-2xl font-bold text-slate-900">
 						Connexion Admin
 					</h1>
-					<p className="text-xs text-slate-500 mt-2 uppercase tracking-wider font-bold">
-						Plateforme d'analyse IRIS
+					<p className="font-abril text-sm text-slate-500 mt-2">
+						Plateforme Analytique - iris.
 					</p>
 				</div>
 

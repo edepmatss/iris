@@ -6,7 +6,7 @@ import {
 	Building2,
 	TrendingUp,
 	MapPin,
-	BarChart3,
+	Activity,
 	ChevronLeft,
 	LogIn,
 	LogOut,
@@ -51,7 +51,7 @@ export default function Sidebar({
 			>
 				<div className="flex items-center gap-2.5">
 					<div className="flex items-center justify-center shrink-0 w-9 h-9 rounded-xl bg-cyan-900 shadow-md">
-						<BarChart3
+						<Activity
 							className="w-[18px] h-[18px] text-white"
 							strokeWidth={2.5}
 						/>
@@ -59,11 +59,8 @@ export default function Sidebar({
 
 					{sidebarOpen && (
 						<div>
-							<p className="font-['Syne',sans-serif] font-extrabold text-lg text-slate-900 tracking-tight leading-none">
-								IRIS
-							</p>
-							<p className="text-[9px] text-slate-500 tracking-widest uppercase mt-0.5">
-								Analyse Immo
+							<p className="font-abril font-normal text-lg text-slate-900 tracking-normal leading-none">
+								iris.
 							</p>
 						</div>
 					)}

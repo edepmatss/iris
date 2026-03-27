@@ -145,7 +145,7 @@ export default function Dashboard() {
 				>
 					<h3 className="flex items-center gap-2 text-xs font-semibold text-slate-700 tracking-wide m-0">
 						<ListChecks size={15} className="text-slate-400" />
-						Gérer les Widgets Existants
+						Gérer les widgets existants
 					</h3>
 
 					<ul
@@ -179,7 +179,7 @@ export default function Dashboard() {
 											<p
 												className={`m-0 text-xs font-medium ${isActive ? "text-emerald-500" : "text-rose-400"}`}
 											>
-												Status: {w.status}
+												Statut : {w.status}
 											</p>
 										</div>
 									</div>

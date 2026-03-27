@@ -6,7 +6,7 @@ import {
 	MapPin,
 	ArrowRight,
 	Plus,
-	BarChart3,
+	Activity,
 } from "lucide-react";
 import useFetchData from "../utils/useFetchData";
 
@@ -89,17 +89,17 @@ export default function Home({ onNavigate }: HomeProps) {
 			<div className="mb-16 animate-fade-up">
 				<div className="flex items-center gap-4 mb-6">
 					<div className="w-[52px] h-[52px] rounded-[14px] bg-cyan-900 flex items-center justify-center shadow-md shadow-cyan-900/10 shrink-0">
-						<BarChart3
+						<Activity
 							className="w-7 h-7 text-white"
 							strokeWidth={2.5}
 						/>
 					</div>
 					<div>
-						<p className="text-xs font-bold text-slate-500 tracking-[0.15em] uppercase">
-							Plateforme analytique
+						<p className="font-abril text-sm text-slate-500 mb-1">
+							Plateforme Analytique
 						</p>
-						<h1 className="font-['Syne',sans-serif] font-extrabold text-[32px] text-slate-900 leading-none">
-							IRIS
+						<h1 className="font-abril font-normal text-[36px] text-slate-900 leading-none tracking-tight">
+							iris.
 						</h1>
 					</div>
 				</div>
@@ -137,7 +137,7 @@ export default function Home({ onNavigate }: HomeProps) {
 			</div>
 
 			<div className="animate-fade-up-d2">
-				<p className="font-['Syne',sans-serif] font-bold text-xs uppercase tracking-[0.12em] text-slate-500 mb-4">
+				<p className="font-bold text-xs uppercase tracking-[0.12em] text-slate-500 mb-4">
 					Modules d'analyse
 				</p>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -161,7 +161,7 @@ export default function Home({ onNavigate }: HomeProps) {
 									strokeWidth={2}
 								/>
 							</div>
-							<p className="font-['Syne',sans-serif] font-bold text-[15px] text-slate-900 mb-1.5">
+							<p className="font-bold text-[15px] text-slate-900 mb-1.5">
 								{m.title}
 							</p>
 							<p className="text-[12.5px] text-slate-500 leading-[1.6]">

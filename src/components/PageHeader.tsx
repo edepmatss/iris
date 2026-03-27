@@ -21,7 +21,7 @@ export default function PageHeader({ title, onBack }: PageHeaderProps) {
 					{title}
 				</span>
 			</div>
-			<h1 className="font-['Syne',sans-serif] font-extrabold text-[28px] text-slate-900 tracking-tight leading-tight">
+			<h1 className="font-extrabold text-[28px] text-slate-900 tracking-tight leading-tight">
 				{title}
 			</h1>
 		</div>

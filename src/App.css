@@ -3,4 +3,40 @@
 @tailwind utilities;
 
 body {
+	font-family: 'Clash Grotesk', sans-serif !important;
+}
+
+@font-face {
+  font-family: 'Clash Grotesk';
+  src: url('./assets/font/ClashGrotesk-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Clash Grotesk';
+  src: url('./assets/font/ClashGrotesk-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Clash Grotesk';
+  src: url('./assets/font/ClashGrotesk-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Clash Grotesk';
+  src: url('./assets/font/ClashGrotesk-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Abril Fatface';
+  src: url('./assets/font/AbrilFatface-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+.font-abril {
+  font-family: 'Abril Fatface', serif !important;
 }
