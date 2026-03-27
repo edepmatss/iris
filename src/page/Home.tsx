@@ -25,8 +25,8 @@ const modules = [
 	{
 		id: "module1",
 		icon: Map,
-		title: "Vue Nationale",
-		desc: "Densité de population, top départements, KPIs généraux du parc immobilier.",
+		title: "L'Offre et la Tension",
+		desc: "Découvrez quels départements sont les meilleurs élèves et comment le parc a évolué depuis 2021.",
 		lightBg: "bg-sky-50",
 		iconColor: "text-sky-600",
 		hoverStyle:
@@ -35,8 +35,8 @@ const modules = [
 	{
 		id: "module2",
 		icon: Users,
-		title: "Précarité & Social",
-		desc: "Corrélations pauvreté/logement social, focus chômage et loyers.",
+		title: "Précarité et Solidarité",
+		desc: "Le logement social est-il vraiment là où on en a le plus besoin ? Croisez les taux de pauvreté avec l'offre de logements.",
 		lightBg: "bg-pink-50",
 		iconColor: "text-pink-600",
 		hoverStyle:
@@ -45,8 +45,8 @@ const modules = [
 	{
 		id: "module3",
 		icon: Building2,
-		title: "Vacance",
-		desc: "Taux de logements vacants par région et répartition des résidences.",
+		title: "Urgence Énergétique",
+		desc: "Passoires thermiques ou bâtiments basse consommation ? Analysez la performance écologique du parc social actuel.",
 		lightBg: "bg-amber-50",
 		iconColor: "text-amber-600",
 		hoverStyle:
@@ -55,8 +55,8 @@ const modules = [
 	{
 		id: "module4",
 		icon: TrendingUp,
-		title: "Dynamique du Parc",
-		desc: "Évolution de la vacance 2021→2023, part du parc social.",
+		title: "Mobilité et Vacance",
+		desc: "Le parc est-il figé ? Observez les taux de rotation, les démolitions et la vacance locative.",
 		lightBg: "bg-emerald-50",
 		iconColor: "text-emerald-600",
 		hoverStyle:
@@ -65,8 +65,8 @@ const modules = [
 	{
 		id: "module5",
 		icon: MapPin,
-		title: "Territoire",
-		desc: "Moteurs démographiques, attractivité migratoire, typologies urbain/rural.",
+		title: "Demain, quel Habitat ?",
+		desc: "Entre explosion de la jeunesse et papy-boom, voyez comment les territoires anticipent les besoins de demain.",
 		lightBg: "bg-purple-50",
 		iconColor: "text-purple-600",
 		hoverStyle:

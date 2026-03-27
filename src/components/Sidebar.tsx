@@ -23,11 +23,11 @@ interface SidebarProps {
 
 const NAV = [
 	{ id: "home", label: "Accueil", icon: Home },
-	{ id: "module1", label: "Vue Nationale", icon: Map },
-	{ id: "module2", label: "Précarité", icon: Users },
-	{ id: "module3", label: "Vacance", icon: Building2 },
-	{ id: "module4", label: "Dynamique", icon: TrendingUp },
-	{ id: "module5", label: "Territoire", icon: MapPin },
+	{ id: "module1", label: "L'Offre et la Tension", icon: Map },
+	{ id: "module2", label: "Précarité et Solidarité", icon: Users },
+	{ id: "module3", label: "Urgence Énergétique", icon: Building2 },
+	{ id: "module4", label: "Mobilité et Vacance", icon: TrendingUp },
+	{ id: "module5", label: "Demain, quel Habitat ?", icon: MapPin },
 ];
 
 export default function Sidebar({

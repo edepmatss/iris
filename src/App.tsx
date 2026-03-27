@@ -24,11 +24,11 @@ import Sidebar from "./components/Sidebar.tsx";
 import Dashbord from "./page/admin/dashbord.tsx";
 
 const TITLES: Record<string, string> = {
-	module1: "Vue Nationale",
-	module2: "Précarité & Social",
-	module3: "Vacance du Parc",
-	module4: "Dynamique du Parc",
-	module5: "Analyse Territoriale",
+	module1: "L'Offre et la Tension",
+	module2: "Précarité et Solidarité",
+	module3: "Urgence Énergétique",
+	module4: "Mobilité et Vacance",
+	module5: "Demain, quel Habitat ?",
 };
 
 interface Filters {
